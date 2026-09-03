@@ -1,0 +1,62 @@
+{
+  "name": "@integrable-cloud/sdk",
+  "version": "0.1.0",
+  "description": "Official TypeScript SDK for the Integrable Cloud API — website chat assistants, conversations, knowledge bases and analytics.",
+  "keywords": [
+    "integrable",
+    "chatbot",
+    "ai",
+    "customer-support",
+    "sdk",
+    "api"
+  ],
+  "homepage": "https://integrable.cloud/docs",
+  "bugs": "https://github.com/integrable-cloud/sdk-typescript/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/integrable-cloud/sdk-typescript.git"
+  },
+  "license": "MIT",
+  "author": "Integrable Cloud",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "generate": "openapi-typescript openapi.json -o src/generated/schema.ts",
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit && vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "openapi-typescript": "^7.13.0",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

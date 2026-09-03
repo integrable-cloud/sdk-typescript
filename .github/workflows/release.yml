@@ -1,0 +1,64 @@
+name: Release
+
+# Publishing is triggered by a tag, never by a push to main. A merge should not
+# be able to publish: releasing is a decision, and tagging is where that
+# decision gets recorded.
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+  # Required for npm provenance — the attestation that links this tarball to
+  # this commit and this workflow, so an installer can verify where it came
+  # from. It is what makes a stolen publish token insufficient on its own.
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - run: npm ci
+
+      # The full gate again, on the exact commit being published. CI having
+      # passed on the branch is not the same as it passing on the tag.
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+      # The tag is the source of truth for the version, and package.json must
+      # agree. A mismatch means the tag says one thing and the registry another
+      # for the rest of time — cheap to check, impossible to undo.
+      - name: Tag matches package.json
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG="$(node -p "require('./package.json').version")"
+          if [ "$TAG" != "$PKG" ]; then
+            echo "::error::tag v$TAG does not match package.json $PKG"
+            exit 1
+          fi
+          echo "Publishing $PKG"
+
+      - name: Publish
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Replace the two lines above with `npm publish --provenance` once a
+      # trusted publisher is configured on npmjs.com for this repo — OIDC then
+      # mints a short-lived credential per run and NPM_TOKEN can be deleted.
+
+      - name: Release notes
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true

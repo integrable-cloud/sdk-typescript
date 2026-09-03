@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A second push to the same branch cancels the first: a queue of stale runs
+# tells you nothing and holds up the one you care about.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # 18 is the floor `engines` promises, so it is tested rather than
+        # assumed. 22 is what most people are actually on.
+        node: [18, 20, 22]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - run: npm ci
+
+      # The generated types must match the committed spec. Regenerating and
+      # diffing catches the case where someone edits `src/generated/` by hand
+      # to make a build pass - which works locally and breaks the next
+      # regeneration.
+      - name: Types match the spec
+        run: |
+          npm run generate
+          git diff --exit-code src/generated/ || {
+            echo "::error::src/generated/ is stale. Run 'npm run generate' and commit."
+            exit 1
+          }
+
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+      # A package that builds but cannot be imported is a package that fails on
+      # somebody else's machine. Both module systems are exercised against the
+      # real artefact.
+      - name: The built package imports both ways
+        run: |
+          node -e "import('./dist/index.js').then(m => {
+            if (typeof m.Integrable !== 'function') throw new Error('ESM export missing');
+            console.log('ESM ok');
+          })"
+          node -e "
+            const m = require('./dist/index.cjs');
+            if (typeof m.Integrable !== 'function') throw new Error('CJS export missing');
+            console.log('CJS ok');
+          "
