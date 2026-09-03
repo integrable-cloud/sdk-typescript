@@ -290,8 +290,12 @@ describe("pagination", () => {
   });
 
   it("refuses to buffer an unbounded set in .all()", async () => {
+    // A counter rather than crypto.randomUUID(): `crypto` is not a bare global
+    // on Node 18, which is the floor `engines` promises. The cursor only has
+    // to differ each page so the repeat-cursor guard does not fire first.
+    let page = 0;
     const fetchImpl = stubFetch(async () =>
-      jsonResponse(200, { items: [{ id: "x" }], next_cursor: crypto.randomUUID(), has_more: true }),
+      jsonResponse(200, { items: [{ id: "x" }], next_cursor: `c${page++}`, has_more: true }),
     );
     await expect(clientWith(fetchImpl).bots.walk().all(5)).rejects.toThrow(
       /Refusing to buffer/,
