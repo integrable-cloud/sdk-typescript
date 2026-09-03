@@ -1,0 +1,6 @@
+# Built on Windows, consumed on Linux CI and by npm. Normalising here keeps a
+# checkout from showing every file as modified, and keeps the published tarball
+# byte-identical regardless of who ran the release.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
