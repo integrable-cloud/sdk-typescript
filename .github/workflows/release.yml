@@ -8,7 +8,11 @@ on:
     tags: ["v*"]
 
 permissions:
-  contents: read
+  # `write`, not `read`: the release-notes step creates a GitHub Release,
+  # which needs it. With `read` the publish still succeeds and only the
+  # notes step fails - a red run for a release that actually shipped, which
+  # is the most misleading way for this workflow to fail.
+  contents: write
   # Required for npm provenance — the attestation that links this tarball to
   # this commit and this workflow, so an installer can verify where it came
   # from. It is what makes a stolen publish token insufficient on its own.
