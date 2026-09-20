@@ -1,6 +1,6 @@
 # @integrable-cloud/sdk
 
-Official TypeScript SDK for the [Integrable Cloud](https://integrable.cloud) API — website chat assistants, conversations, knowledge bases and analytics.
+Official TypeScript SDK for the [Integrable Cloud](https://integrable.cloud) API — website chat agents, conversations, knowledge bases and analytics.
 
 ```bash
 npm install @integrable-cloud/sdk
@@ -15,9 +15,9 @@ import { Integrable } from "@integrable-cloud/sdk";
 
 const client = new Integrable({ apiKey: process.env.INTEGRABLE_API_KEY! });
 
-const { items } = await client.bots.list();
-for (const bot of items) {
-  console.log(bot.id, bot.name, bot.status);
+const { items } = await client.agents.list();
+for (const agent of items) {
+  console.log(agent.id, agent.name, agent.status);
 }
 ```
 
@@ -27,10 +27,10 @@ Create a key in the dashboard under **Settings → API keys**. It starts with `s
 
 **Retries safely.** Transient failures — 429, 5xx, connection resets — are retried with jittered exponential backoff. A `Retry-After` header always wins over the backoff curve, because the server knows when the window resets and the client is guessing.
 
-**Idempotency keys, automatically.** Every mutating request carries one. Critically, a retry reuses the *same* key, so a create that timed out and was retried produces one bot rather than three. Supply your own when you need it:
+**Idempotency keys, automatically.** Every mutating request carries one. Critically, a retry reuses the *same* key, so a create that timed out and was retried produces one agent rather than three. Supply your own when you need it:
 
 ```ts
-await client.bots.create(body, { idempotencyKey: myStableId });
+await client.agents.create(body, { idempotencyKey: myStableId });
 ```
 
 A mutating request without a key is never retried — "did that land?" is exactly the question retrying cannot answer safely.
@@ -38,7 +38,7 @@ A mutating request without a key is never retried — "did that land?" is exactl
 **Pagination that stays fast.** List endpoints return a cursor, and `walk()` follows it lazily:
 
 ```ts
-for await (const conversation of client.conversations.walk(botId, { days: 30 })) {
+for await (const conversation of client.conversations.walk(agentId, { days: 30 })) {
   await syncToCrm(conversation);
 }
 ```
@@ -51,7 +51,7 @@ Never increment a page number against this API. Offset pagination makes the data
 import { RateLimitError, QuotaExceededError, ValidationError } from "@integrable-cloud/sdk";
 
 try {
-  await client.knowledge.addText(botId, "Hours", "Open 9–5, Mon–Fri.");
+  await client.knowledge.addText(agentId, "Hours", "Open 9–5, Mon–Fri.");
 } catch (error) {
   if (error instanceof QuotaExceededError) {
     console.error("Plan limit reached:", error.details);
@@ -70,7 +70,7 @@ Every error carries `.requestId` — quote it at support and the exact call can 
 **Rate-limit visibility.**
 
 ```ts
-await client.bots.list();
+await client.agents.list();
 console.log(client.rateLimit); // { limit: 120, remaining: 118, reset: 41 }
 ```
 
@@ -97,7 +97,7 @@ import type { components } from "@integrable-cloud/sdk";
 type Contact = components["schemas"]["ContactRead"];
 
 const { data } = await client.http.get<{ items: Contact[] }>(
-  `/api/bots/${botId}/contacts`,
+  `/api/agents/${agentId}/contacts`,
   { query: { limit: 50 } },
 );
 ```

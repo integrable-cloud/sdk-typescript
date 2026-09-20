@@ -9,7 +9,7 @@
  * tenant. Exposing an async iterator makes the correct thing also the shortest
  * thing to write.
  *
- *     for await (const conversation of client.conversations.walk(botId)) {
+ *     for await (const conversation of client.conversations.walk(agentId)) {
  *       ...
  *     }
  *

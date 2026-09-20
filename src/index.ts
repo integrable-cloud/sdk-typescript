@@ -4,7 +4,7 @@
  *     import { Integrable } from "@integrable-cloud/sdk";
  *
  *     const client = new Integrable({ apiKey: process.env.INTEGRABLE_API_KEY! });
- *     const { items } = await client.bots.list();
+ *     const { items } = await client.agents.list();
  *
  * Everything is generated from the same OpenAPI document that produces the
  * reference at integrable.cloud/docs/api and the Python SDK, so the three
@@ -12,13 +12,13 @@
  */
 
 import { HttpClient, type ClientOptions } from "./client.js";
-import { Analytics, Bots, Conversations, Knowledge, Webhooks } from "./resources.js";
+import { Analytics, Agents, Conversations, Knowledge, Webhooks } from "./resources.js";
 
 export class Integrable {
   /** The underlying HTTP client. Use it to reach an endpoint with no wrapper. */
   readonly http: HttpClient;
 
-  readonly bots: Bots;
+  readonly agents: Agents;
   readonly conversations: Conversations;
   readonly knowledge: Knowledge;
   readonly analytics: Analytics;
@@ -26,7 +26,7 @@ export class Integrable {
 
   constructor(options: ClientOptions) {
     this.http = new HttpClient(options);
-    this.bots = new Bots(this.http);
+    this.agents = new Agents(this.http);
     this.conversations = new Conversations(this.http);
     this.knowledge = new Knowledge(this.http);
     this.analytics = new Analytics(this.http);
@@ -62,15 +62,15 @@ export type { Page } from "./pagination.js";
 
 export {
   Analytics,
-  Bots,
+  Agents,
   Conversations,
   Knowledge,
   Webhooks,
 } from "./resources.js";
 export type {
-  Bot,
-  BotCreate,
-  BotUpdate,
+  Agent,
+  AgentCreate,
+  AgentUpdate,
   Document,
   DocumentCreate,
   ListParams,

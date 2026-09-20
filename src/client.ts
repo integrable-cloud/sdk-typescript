@@ -11,7 +11,7 @@
  *
  * **Idempotency keys are automatic.** Every mutating request gets one unless
  * you supply your own. Without it a retry — ours or yours — can charge a
- * customer twice or create a second bot. The key is generated once per logical
+ * customer twice or create a second agent. The key is generated once per logical
  * call and reused across that call's retries, which is the part people get
  * wrong: a key generated inside the retry loop is a different key each time
  * and buys nothing.

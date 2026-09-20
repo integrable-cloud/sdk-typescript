@@ -1,9 +1,10 @@
 {
   "name": "@integrable-cloud/sdk",
-  "version": "0.1.0",
-  "description": "Official TypeScript SDK for the Integrable Cloud API — website chat assistants, conversations, knowledge bases and analytics.",
+  "version": "0.2.0",
+  "description": "Official TypeScript SDK for the Integrable Cloud API — website chat agents, conversations, knowledge bases and analytics.",
   "keywords": [
     "integrable",
+    "agent",
     "chatbot",
     "ai",
     "customer-support",

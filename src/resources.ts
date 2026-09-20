@@ -17,9 +17,9 @@ import type { components } from "./generated/schema.js";
 
 type Schemas = components["schemas"];
 
-export type Bot = Schemas["BotRead"];
-export type BotCreate = Schemas["BotCreate"];
-export type BotUpdate = Schemas["BotUpdate"];
+export type Agent = Schemas["AgentRead"];
+export type AgentCreate = Schemas["AgentCreate"];
+export type AgentUpdate = Schemas["AgentUpdate"];
 export type Document = Schemas["DocumentRead"];
 export type DocumentCreate = Schemas["DocumentCreate"];
 export type Webhook = Schemas["WebhookResponse"];
@@ -31,49 +31,49 @@ export interface ListParams {
   [key: string]: string | number | boolean | undefined;
 }
 
-/** Assistants: create, configure, publish, retire. */
-export class Bots {
+/** Agents: create, configure, publish, retire. */
+export class Agents {
   constructor(private readonly http: HttpClient) {}
 
-  /** One page of assistants. Use `walk()` to iterate all of them. */
+  /** One page of agents. Use `walk()` to iterate all of them. */
   async list(params: ListParams = {}) {
-    const { data } = await this.http.get<Page<Bot>>("/api/bots", { query: params });
+    const { data } = await this.http.get<Page<Agent>>("/api/agents", { query: params });
     return data;
   }
 
-  /** Every assistant, fetched a page at a time as you consume it. */
-  walk(params: ListParams = {}): Paginator<Bot> {
-    return new Paginator<Bot>(async (cursor) => {
-      const { data } = await this.http.get<Page<Bot>>("/api/bots", {
+  /** Every agent, fetched a page at a time as you consume it. */
+  walk(params: ListParams = {}): Paginator<Agent> {
+    return new Paginator<Agent>(async (cursor) => {
+      const { data } = await this.http.get<Page<Agent>>("/api/agents", {
         query: { ...params, cursor },
       });
       return data;
     });
   }
 
-  async get(botId: string, options?: RequestOptions) {
-    const { data } = await this.http.get<Bot>(`/api/bots/${botId}`, options);
+  async get(agentId: string, options?: RequestOptions) {
+    const { data } = await this.http.get<Agent>(`/api/agents/${agentId}`, options);
     return data;
   }
 
-  async create(body: BotCreate, options?: RequestOptions) {
-    const { data } = await this.http.post<Bot>("/api/bots", body, options);
+  async create(body: AgentCreate, options?: RequestOptions) {
+    const { data } = await this.http.post<Agent>("/api/agents", body, options);
     return data;
   }
 
-  async update(botId: string, body: BotUpdate, options?: RequestOptions) {
-    const { data } = await this.http.patch<Bot>(`/api/bots/${botId}`, body, options);
+  async update(agentId: string, body: AgentUpdate, options?: RequestOptions) {
+    const { data } = await this.http.patch<Agent>(`/api/agents/${agentId}`, body, options);
     return data;
   }
 
-  async delete(botId: string, options?: RequestOptions) {
-    await this.http.delete(`/api/bots/${botId}`, options);
+  async delete(agentId: string, options?: RequestOptions) {
+    await this.http.delete(`/api/agents/${agentId}`, options);
   }
 
   /** The embed snippet to paste into a site, with its integrity hash. */
-  async embed(botId: string, options?: RequestOptions) {
+  async embed(agentId: string, options?: RequestOptions) {
     const { data } = await this.http.get<Record<string, unknown>>(
-      `/api/bots/${botId}/embed`,
+      `/api/agents/${agentId}/embed`,
       options,
     );
     return data;
@@ -84,9 +84,9 @@ export class Bots {
 export class Conversations {
   constructor(private readonly http: HttpClient) {}
 
-  async list(botId: string, params: ListParams = {}) {
+  async list(agentId: string, params: ListParams = {}) {
     const { data } = await this.http.get<Page<Record<string, unknown>>>(
-      `/api/bots/${botId}/conversations`,
+      `/api/agents/${agentId}/conversations`,
       { query: params },
     );
     return data;
@@ -98,40 +98,40 @@ export class Conversations {
    * The one to use for an export or a sync — it follows the cursor, so it stays
    * correct and fast on a workspace with a hundred thousand of them.
    */
-  walk(botId: string, params: ListParams = {}): Paginator<Record<string, unknown>> {
+  walk(agentId: string, params: ListParams = {}): Paginator<Record<string, unknown>> {
     return new Paginator(async (cursor) => {
       const { data } = await this.http.get<Page<Record<string, unknown>>>(
-        `/api/bots/${botId}/conversations`,
+        `/api/agents/${agentId}/conversations`,
         { query: { ...params, cursor } },
       );
       return data;
     });
   }
 
-  async get(botId: string, conversationId: string, options?: RequestOptions) {
+  async get(agentId: string, conversationId: string, options?: RequestOptions) {
     const { data } = await this.http.get<Record<string, unknown>>(
-      `/api/bots/${botId}/conversations/${conversationId}`,
+      `/api/agents/${agentId}/conversations/${conversationId}`,
       options,
     );
     return data;
   }
 }
 
-/** The knowledge base an assistant answers from. */
+/** The knowledge base an agent answers from. */
 export class Knowledge {
   constructor(private readonly http: HttpClient) {}
 
-  async list(botId: string, params: ListParams = {}) {
-    const { data } = await this.http.get<Page<Document>>(`/api/bots/${botId}/knowledge`, {
+  async list(agentId: string, params: ListParams = {}) {
+    const { data } = await this.http.get<Page<Document>>(`/api/agents/${agentId}/knowledge`, {
       query: params,
     });
     return data;
   }
 
-  walk(botId: string, params: ListParams = {}): Paginator<Document> {
+  walk(agentId: string, params: ListParams = {}): Paginator<Document> {
     return new Paginator<Document>(async (cursor) => {
       const { data } = await this.http.get<Page<Document>>(
-        `/api/bots/${botId}/knowledge`,
+        `/api/agents/${agentId}/knowledge`,
         { query: { ...params, cursor } },
       );
       return data;
@@ -139,15 +139,15 @@ export class Knowledge {
   }
 
   /**
-   * Teach an assistant something.
+   * Teach an agent something.
    *
    * `source_type` decides which other fields apply: `raw_text` takes
    * `raw_text`, while `url` and `sitemap` take `url` and fetch it themselves.
    * Indexing is asynchronous — poll `status()` until it reports `ready`.
    */
-  async create(botId: string, body: DocumentCreate, options?: RequestOptions) {
+  async create(agentId: string, body: DocumentCreate, options?: RequestOptions) {
     const { data } = await this.http.post<Document>(
-      `/api/bots/${botId}/knowledge`,
+      `/api/agents/${agentId}/knowledge`,
       body,
       options,
     );
@@ -156,28 +156,28 @@ export class Knowledge {
 
   /** Add plain text, the common case, without assembling the discriminator. */
   async addText(
-    botId: string,
+    agentId: string,
     title: string,
     text: string,
     options?: RequestOptions,
   ): Promise<Document> {
     return this.create(
-      botId,
+      agentId,
       { source_type: "raw_text", title, raw_text: text } as DocumentCreate,
       options,
     );
   }
 
-  async status(botId: string, documentId: string, options?: RequestOptions) {
+  async status(agentId: string, documentId: string, options?: RequestOptions) {
     const { data } = await this.http.get<Record<string, unknown>>(
-      `/api/bots/${botId}/knowledge/${documentId}/status`,
+      `/api/agents/${agentId}/knowledge/${documentId}/status`,
       options,
     );
     return data;
   }
 
-  async delete(botId: string, documentId: string, options?: RequestOptions) {
-    await this.http.delete(`/api/bots/${botId}/knowledge/${documentId}`, options);
+  async delete(agentId: string, documentId: string, options?: RequestOptions) {
+    await this.http.delete(`/api/agents/${agentId}/knowledge/${documentId}`, options);
   }
 }
 
@@ -185,18 +185,18 @@ export class Knowledge {
 export class Analytics {
   constructor(private readonly http: HttpClient) {}
 
-  async forBot(botId: string, params: { days?: number } = {}, options?: RequestOptions) {
+  async forAgent(agentId: string, params: { days?: number } = {}, options?: RequestOptions) {
     const { data } = await this.http.get<Record<string, unknown>>(
-      `/api/bots/${botId}/analytics`,
+      `/api/agents/${agentId}/analytics`,
       { ...options, query: params },
     );
     return data;
   }
 
-  /** The gaps report: questions the assistant could not answer well. */
-  async gaps(botId: string, options?: RequestOptions) {
+  /** The gaps report: questions the agent could not answer well. */
+  async gaps(agentId: string, options?: RequestOptions) {
     const { data } = await this.http.get<Record<string, unknown>>(
-      `/api/bots/${botId}/analytics/gaps`,
+      `/api/agents/${agentId}/analytics/gaps`,
       options,
     );
     return data;
@@ -222,7 +222,7 @@ export class Webhooks {
   }
 
   async create(
-    body: { url: string; events: string[]; description?: string; bot_id?: string },
+    body: { url: string; events: string[]; description?: string; agent_id?: string },
     options?: RequestOptions,
   ) {
     // `WebhookCreated`, not `WebhookResponse`: the create response is the

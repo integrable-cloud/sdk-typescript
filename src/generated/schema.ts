@@ -57,6 +57,1113 @@ export interface paths {
         patch: operations["acknowledge_advice_api_advice__recommendation_id__patch"];
         trace?: never;
     };
+    "/api/agents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Agents */
+        get: operations["list_agents_api_agents_get"];
+        put?: never;
+        /** Create Agent */
+        post: operations["create_agent_api_agents_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Generate Agent
+         * @description Builds a fully-configured agent from one plain-language description.
+         *
+         *     This is the product's main path, not a convenience wrapper: the customer
+         *     describes their business, and everything the advanced screens expose -
+         *     persona, greeting, starter questions, which details to collect and when,
+         *     what to extract from conversation, routing, theme - is inferred. They open
+         *     the advanced screens only to disagree with something.
+         *
+         *     With `import_website`, the site is also crawled into the knowledge base in
+         *     the background, so the agent can answer real questions from its first minute
+         *     rather than being an empty persona.
+         */
+        post: operations["generate_agent_api_agents_generate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/models": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Available Models
+         * @description Models this org's plan may select, with measured characteristics.
+         *
+         *     Shaped for a model switcher rather than for a developer. The owner sees the
+         *     lab that made it and one word for what it is good at - `name` is
+         *     "Alibaba - Long memory", not `qwen/qwen3.7-flash` - because a model id is
+         *     meaningless to the person choosing and mildly alarming to the rest.
+         *
+         *     `ttft_ms` is the number worth putting next to the choice, and it is ours:
+         *     OpenRouter publishes no latency at all (its `latency_last_30m` returns null
+         *     on every endpoint), so every figure here came from
+         *     `scripts/model_probe.py` running one real support turn against our own
+         *     host. `measured_on` ships with it, because a latency claim with no date is
+         *     marketing rather than measurement.
+         */
+        get: operations["available_models_api_agents_models_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/onboarding/rehearse": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rehearse Blueprint
+         * @description Shows what a candidate agent would say, before anything is live.
+         *
+         *     An agent that refuses the first three questions a real visitor would
+         *     ask is one the owner should see refusing them in private. This is the
+         *     difference between a customer who adjusts the configuration and one who
+         *     publishes it, watches it fail in front of a visitor, and leaves.
+         */
+        post: operations["rehearse_blueprint_api_agents_onboarding_rehearse_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/onboarding/scan": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Scan Website
+         * @description Reads a business's website, best pages first.
+         *
+         *     Separate from `/generate` so the dashboard can show what was found before
+         *     spending a model call on it - "we read your pricing, FAQ and services
+         *     pages" is the moment a customer starts trusting the thing, and "we could
+         *     not read your site" is a much better first message than a confidently
+         *     wrong agent.
+         */
+        post: operations["scan_website_api_agents_onboarding_scan_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/onboarding/variants": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Generate Variants
+         * @description Three configurations to choose between.
+         *
+         *     They differ along one axis - how hard the agent pushes for contact
+         *     details - because that is a decision about the customer's business rather
+         *     than a preference they can adjust later. Tone and verbosity are settings;
+         *     "do you want callbacks or answers" is not.
+         */
+        post: operations["generate_variants_api_agents_onboarding_variants_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Agent */
+        get: operations["get_agent_api_agents__agent_id__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete Agent
+         * @description Soft delete: the agent goes offline immediately and is purged after the
+         *     retention window, so an accidental deletion is recoverable.
+         */
+        delete: operations["delete_agent_api_agents__agent_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Agent */
+        patch: operations["update_agent_api_agents__agent_id__patch"];
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/advice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Advice
+         * @description The most recent AI recommendations, plus the history behind them.
+         *
+         *     Read, never generated. Producing one costs a real model call over a real
+         *     window and takes seconds; a scheduled job writes them and this shows the
+         *     latest. The history is the persuasive part - a health score that went from
+         *     54 to 71 after somebody acted on the advice is the best evidence this
+         *     feature can offer.
+         */
+        get: operations["advice_api_agents__agent_id__advice_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/analytics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Agent Analytics
+         * @description Overview and daily series for one agent.
+         *
+         *     Carries an `ETag`, because this is the panel a dashboard polls. A client
+         *     that revalidates gets a 304 and no body at all - which on a 90-day series
+         *     is kilobytes per poll, and on a phone is the difference between a refresh
+         *     that feels instant and one that does not.
+         */
+        get: operations["agent_analytics_api_agents__agent_id__analytics_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/analytics/gaps": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Knowledge Gaps
+         * @description Questions the agent could not answer.
+         *
+         *     The most directly actionable panel in the product: it is the evidence for
+         *     what the knowledge base is missing.
+         */
+        get: operations["knowledge_gaps_api_agents__agent_id__analytics_gaps_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/analytics/insights": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Agent Insights
+         * @description The three numbers that answer "is it working".
+         *
+         *     Volume tells a customer the agent ran. This tells them whether it
+         *     helped: how often it resolved a conversation without a person, what people
+         *     ask about, and how often each of those topics goes wrong.
+         *
+         *     Returned together rather than as three endpoints because they are read
+         *     together and each is a small query - three round trips from a browser on a
+         *     phone costs more than the queries do.
+         */
+        get: operations["agent_insights_api_agents__agent_id__analytics_insights_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export Archive
+         * @description Downloads recent conversations as a portable, verifiable bundle.
+         *
+         *     The file is self-describing JSON with a checksum and a signature, so it
+         *     can be kept, mailed to somebody, and brought back later to be looked at -
+         *     including by a customer who has cancelled, which is a promise worth making
+         *     and cheap to keep.
+         *
+         *     `redact=true` strips names, emails, phone numbers and the visitor id while
+         *     keeping every transcript and every number derived from them. It exists
+         *     because the most common reason to export chats is to send them to
+         *     somebody, and the second most common regret is having sent personal data
+         *     with them.
+         */
+        get: operations["export_archive_api_agents__agent_id__archive_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/contacts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Contacts
+         * @description One row per person, deduplicated across sessions and devices - unlike
+         *     /conversations, which is one row per session.
+         */
+        get: operations["list_contacts_api_agents__agent_id__contacts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/contacts/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Export Contacts */
+        get: operations["export_contacts_api_agents__agent_id__contacts_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/contacts/{contact_id}/data": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export Subject Data
+         * @description Everything held about one person, for a subject access request.
+         *
+         *     Article 15 asks for a copy of the personal data undergoing processing in a
+         *     commonly used electronic form. The tenant is the controller and this is
+         *     what lets them answer without opening a support ticket with us.
+         */
+        get: operations["export_subject_data_api_agents__agent_id__contacts__contact_id__data_get"];
+        put?: never;
+        post?: never;
+        /**
+         * Erase Subject Data
+         * @description Article 17 erasure, in whichever of the two forms the tenant chooses.
+         *
+         *     `redact` strips the identifiers and keeps the transcripts, so the analytics
+         *     they paid for survive and what remains points at nobody. `delete` removes
+         *     the conversations outright - easier to defend, and it takes their own
+         *     history with it.
+         *
+         *     A parameter rather than a policy, because the choice is the controller's:
+         *     it is their lawful basis and their retention obligations, and deciding for
+         *     them would be us making their compliance decision for them.
+         */
+        delete: operations["erase_subject_data_api_agents__agent_id__contacts__contact_id__data_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/conversations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Conversations
+         * @description One page of conversations.
+         *
+         *     `cursor` is the mode to use for anything that walks the whole list -
+         *     exports, infinite scroll, an integration syncing conversations. It is
+         *     constant-cost at any depth and stable while new conversations arrive;
+         *     `page` is neither, and exists because a numbered pager needs it.
+         *
+         *     `search_transcript=true` widens `q` from metadata - visitor, page, contact
+         *     details, title - to what was actually *said*, using the full-text index
+         *     that has been in the schema since the first migration and, until now, was
+         *     referenced by no query in the codebase.
+         *
+         *     `count=false` skips the `COUNT(*)`, which is the half of the request that
+         *     scans. `total` comes back as -1 and `has_more` is the field to read.
+         *
+         *     `outcome`, `sentiment`, `intent`, `min_rating` / `max_rating`,
+         *     `min_lead_score` and the date bounds are what make the insight panels
+         *     lead somewhere. Before them, the dashboard could tell a customer that 22%
+         *     of their pricing conversations were refused and offer no way to open those
+         *     twelve conversations - which is a report, not a tool.
+         */
+        get: operations["list_conversations_api_agents__agent_id__conversations_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/conversations/bulk": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Bulk Update Conversations
+         * @description Resolve, reopen or delete a batch of conversations.
+         *
+         *     Every item reports its own outcome. A bulk endpoint that returns `200 OK`
+         *     after partially failing is worse than one that does not exist, because the
+         *     operator believes it worked and finds out from a customer.
+         *
+         *     The batch is capped rather than queued. At 200 items this comfortably fits
+         *     inside a request; the point at which it would not is the point at which the
+         *     right answer is a job, not a longer timeout.
+         */
+        post: operations["bulk_update_conversations_api_agents__agent_id__conversations_bulk_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/conversations/{conversation_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Conversation */
+        get: operations["get_conversation_api_agents__agent_id__conversations__conversation_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/dashboard": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Agent Dashboard
+         * @description One agent's dashboard, at whichever depth the reader asked for.
+         *
+         *     Carries an ETag. This is the panel a dashboard polls and the advanced
+         *     payload is tens of kilobytes; a client that revalidates gets a 304 and no
+         *     body, which on a phone is the difference between a refresh that feels
+         *     instant and one that does not.
+         */
+        get: operations["agent_dashboard_api_agents__agent_id__dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/discovered-fields": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Discovered
+         * @description What this agent has noticed, most-evidenced first.
+         *
+         *     Defaults to everything still open - `suggested` and `observing` - because
+         *     that is the question the screen exists to answer. `observing` is included
+         *     rather than hidden: an owner who can see "seen on 2 people so far"
+         *     understands why nothing is being offered yet, where an empty screen reads
+         *     as the feature being broken.
+         */
+        get: operations["list_discovered_api_agents__agent_id__discovered_fields_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/discovered-fields/{field_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Forget
+         * @description Deletes the evidence and every staged value for this slug.
+         *
+         *     Distinct from dismissing, and both are needed. Dismiss says "not a field" -
+         *     the observations stay on the contacts who volunteered them, and the slug is
+         *     never offered again. Forget says "stop holding this", and clears the values
+         *     out of every contact record too.
+         *
+         *     A tenant who realises their agent has been noting something they should not
+         *     hold needs the second one, and needs it to actually remove the data rather
+         *     than hide the suggestion.
+         */
+        delete: operations["forget_api_agents__agent_id__discovered_fields__field_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/discovered-fields/{field_id}/accept": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Accept
+         * @description Promotes a slug to a real field and fills it in for everyone who already
+         *     told you.
+         *
+         *     The backfill is the point. An accepted field that starts empty looks like
+         *     nothing happened, and the owner's next move is to turn the feature off.
+         */
+        post: operations["accept_api_agents__agent_id__discovered_fields__field_id__accept_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/discovered-fields/{field_id}/dismiss": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Dismiss
+         * @description Terminal. The row is kept precisely so this is never suggested again.
+         */
+        post: operations["dismiss_api_agents__agent_id__discovered_fields__field_id__dismiss_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/duplicate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Duplicate Agent */
+        post: operations["duplicate_agent_api_agents__agent_id__duplicate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/embed": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Embed
+         * @description The snippet a customer pastes, in two forms.
+         *
+         *     `snippet` is the one almost everybody wants: a stable URL that picks up
+         *     every widget improvement without them touching their HTML again.
+         *
+         *     `pinned_snippet` is for the customer whose change-control process forbids a
+         *     third-party script that can change under them - which is most enterprises,
+         *     and the question arrives during a security review rather than during a
+         *     trial. It names the content-hashed build and carries an `integrity` hash,
+         *     so the browser refuses to execute anything but the exact bytes that were
+         *     reviewed.
+         *
+         *     Pinning is offered, never defaulted. A pinned embed stops receiving fixes,
+         *     including security ones, until somebody edits their page - so it has to be
+         *     a decision the customer makes rather than one we make for them.
+         */
+        get: operations["get_embed_api_agents__agent_id__embed_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/funnel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Funnel
+         * @description Impressions, opens and abandonment - the funnel above the first message.
+         *
+         *     Everything else in the dashboard starts counting at a conversation, which
+         *     means the most-asked question of month two has never had an answer here.
+         */
+        get: operations["get_funnel_api_agents__agent_id__funnel_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/intents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Intents
+         * @description What visitors wanted, who is worth calling back, and what to fix.
+         *
+         *     `coverage` comes back with every panel built on classification. A
+         *     breakdown covering 12% of conversations is not wrong, but presenting it
+         *     without saying so invites reading a sample as the whole - and the
+         *     classifier runs on a schedule, so on a busy day it is genuinely behind.
+         */
+        get: operations["intents_api_agents__agent_id__intents_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/knowledge": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Documents */
+        get: operations["list_documents_api_agents__agent_id__knowledge_get"];
+        put?: never;
+        /**
+         * Create Document
+         * @description Adds pasted text, a single URL, or a whole site to the knowledge base.
+         *
+         *     URLs and sitemaps are fetched by a worker, not here: reaching an arbitrary
+         *     third-party site can take twenty seconds and fail in a dozen ways, none of
+         *     which should happen while a customer waits on a form.
+         */
+        post: operations["create_document_api_agents__agent_id__knowledge_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/knowledge/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Search Knowledge
+         * @description Runs the agent's own retrieval and shows exactly what comes back.
+         *
+         *     The fastest way to diagnose a bad answer: it separates "the model reasoned
+         *     poorly" from "the right passage was never retrieved", which are different
+         *     problems with different fixes.
+         */
+        post: operations["search_knowledge_api_agents__agent_id__knowledge_search_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/knowledge/upload": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload Document
+         * @description Accepts a file upload.
+         *
+         *     The size cap is enforced **while reading**, not after. `await file.read()`
+         *     on an unbounded upload buffers the whole body into memory first, so a
+         *     single large request can exhaust a 512 MB container before any check runs -
+         *     which is a denial-of-service an authenticated user can trigger by accident.
+         */
+        post: operations["upload_document_api_agents__agent_id__knowledge_upload_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/knowledge/{document_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Document */
+        delete: operations["delete_document_api_agents__agent_id__knowledge__document_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/knowledge/{document_id}/download": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Download Document
+         * @description A short-lived signed link to the file the customer originally uploaded.
+         *
+         *     Returns the URL rather than the bytes. Proxying a download through the API
+         *     holds a worker for as long as somebody's connection lasts, which is a poor
+         *     use of a small container when the object store does this natively - and the
+         *     signature is what enforces the tenant boundary, not the redirect.
+         *
+         *     404 rather than 204 when no original exists, because "this document has no
+         *     stored source" and "no such document" are the same answer to a caller: there
+         *     is nothing here to download. Documents added as pasted text or crawled URLs
+         *     never had a source file, and documents uploaded before this shipped were not
+         *     kept.
+         */
+        get: operations["download_document_api_agents__agent_id__knowledge__document_id__download_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/knowledge/{document_id}/reindex": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Reindex Document */
+        post: operations["reindex_document_api_agents__agent_id__knowledge__document_id__reindex_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/knowledge/{document_id}/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Document Status
+         * @description Polled after upload until the document reaches a terminal state.
+         */
+        get: operations["document_status_api_agents__agent_id__knowledge__document_id__status_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/report": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Agent Report
+         * @description The whole dashboard as a file, in any of five formats.
+         *
+         *     All five are renderings of one `Report` object, which is the property that
+         *     matters: a customer who exports the same period as a spreadsheet and as a
+         *     PDF and finds two different numbers has learned something about this
+         *     product that no amount of later accuracy undoes.
+         *
+         *     `advanced` by default here, unlike the screen. Somebody who chose to
+         *     download a file has asked for the data; the mode switch inside the HTML
+         *     export still lets them read it simply.
+         */
+        get: operations["agent_report_api_agents__agent_id__report_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/rotate-key": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Rotate Key
+         * @description Issues a new embed key. Every existing embed of this agent stops working.
+         */
+        post: operations["rotate_key_api_agents__agent_id__rotate_key_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/satisfaction": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Satisfaction
+         * @description CSAT and sentiment, with the trend and the conversations behind it.
+         *
+         *     Both numbers have been collected since the widget shipped and aggregated
+         *     by nothing. This endpoint adds no writes and no dependency - the whole cost
+         *     of the feature had already been paid.
+         */
+        get: operations["satisfaction_api_agents__agent_id__satisfaction_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/suggest-improvements": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Suggest Improvements
+         * @description Reviews the questions this agent answered badly and proposes fixes.
+         *
+         *     Closes the loop that manual prompt engineering leaves open - the failures
+         *     are already recorded, and nobody reads transcripts by hand.
+         */
+        post: operations["suggest_improvements_api_agents__agent_id__suggest_improvements_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Test Message
+         * @description Sends one message through the same retrieval and generation path the
+         *     widget uses, without creating a conversation.
+         *
+         *     Rate-limited despite being authenticated: it is an unmetered paid model
+         *     call, and an authenticated user scripting it is a cost-denial vector as
+         *     real as an anonymous one.
+         */
+        post: operations["test_message_api_agents__agent_id__test_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/theme/avatar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Upload Avatar
+         * @description Uploads the agent's avatar and points the theme at it.
+         *
+         *     `widget_theme.avatar_url` has been settable since themes existed, with
+         *     nothing behind it - a tenant could name an image they hosted themselves and
+         *     had no way to supply one otherwise. Object storage removed that blocker on
+         *     2026-08-29; this is the endpoint that was left.
+         *
+         *     The size cap is enforced *while reading*, as it is on document upload and
+         *     for the same reason: `await file.read()` on an unbounded body buffers the
+         *     whole thing before any check runs, so one large request can exhaust the
+         *     container before the limit is consulted.
+         *
+         *     The file's type is read from its bytes, never from the `Content-Type` the
+         *     uploader claims - see `app.platform.images`. The stored object is served to
+         *     every visitor of the tenant's website, and an attacker-chosen type there is
+         *     how an avatar becomes `text/html` on our own origin.
+         */
+        post: operations["upload_avatar_api_agents__agent_id__theme_avatar_post"];
+        /**
+         * Delete Avatar
+         * @description Removes the avatar and clears the theme field.
+         *
+         *     The field is cleared even when the object could not be deleted. The tenant
+         *     asked to stop showing the image; refusing that because storage was
+         *     unreachable would leave it on their website to protect an invariant only we
+         *     care about. The orphaned object is caught by the storage reconcile.
+         */
+        delete: operations["delete_avatar_api_agents__agent_id__theme_avatar_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/theme/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Generate Theme
+         * @description A palette from a sentence, or from the customer's own website.
+         *
+         *     Returns the theme without saving it unless `apply` is set. A colour scheme
+         *     is the most visible thing about a widget and the cheapest to disagree with,
+         *     so the default is to propose rather than to change - the tenant sees it in
+         *     the preview and decides.
+         *
+         *     The palette is contrast-corrected before it is returned, not validated and
+         *     rejected. Failing this request because a model chose a slightly too-light
+         *     grey would leave the customer with an error about a hex code they never
+         *     picked; correcting it and telling them what changed is the useful version
+         *     of the same rule. See `theme_service.readable_theme`.
+         */
+        post: operations["generate_theme_api_agents__agent_id__theme_generate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/traffic": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Traffic
+         * @description Website traffic, not just widget traffic.
+         *
+         *     The denominator the funnel never had: how many people were on the site at
+         *     all. "42 opens" is a number with no scale; "42 of 3,140 visitors" is the
+         *     thing that makes a free customer upgrade.
+         */
+        get: operations["traffic_api_agents__agent_id__traffic_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/versions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Versions */
+        get: operations["list_versions_api_agents__agent_id__versions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/agents/{agent_id}/versions/{version}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Restore Version */
+        post: operations["restore_version_api_agents__agent_id__versions__version__restore_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/alerts": {
         parameters: {
             query?: never;
@@ -110,6 +1217,71 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/alerts/sms/provider": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read Sms Provider
+         * @description What is connected, and what one message would cost by destination.
+         *
+         *     The zone table is returned here as well as on the channel list because
+         *     this is the screen where somebody decides between our account and theirs,
+         *     and that decision is entirely about the per-destination price.
+         */
+        get: operations["read_sms_provider_api_alerts_sms_provider_get"];
+        /**
+         * Save Sms Provider
+         * @description Connects a carrier account. Admin, because it spends the tenant's money.
+         *
+         *     Not owner-only: an agency's operations lead sets this up, and requiring the
+         *     account owner for a credential the owner does not hold is how a setting
+         *     ends up shared over email instead.
+         */
+        put: operations["save_sms_provider_api_alerts_sms_provider_put"];
+        post?: never;
+        /**
+         * Disconnect Sms Provider
+         * @description Disconnects, falling back to the platform account rather than to nothing.
+         *
+         *     Existing SMS rules keep working and start drawing credits, which is the
+         *     right default - a customer who removes a credential has not asked for their
+         *     alerts to stop, and silently stopping them is how somebody misses a lead.
+         */
+        delete: operations["disconnect_sms_provider_api_alerts_sms_provider_delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/alerts/sms/quote": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Quote Sms
+         * @description What one SMS to this number costs, before anything is committed to.
+         *
+         *     Germany is 180 credits a message - 1.6% of an Essential plan's entire
+         *     period allowance for a single alert. A customer who learns that from their
+         *     statement has been treated badly by the product, however correct the
+         *     arithmetic was.
+         */
+        get: operations["quote_sms_api_alerts_sms_quote_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/alerts/telegram/connect": {
         parameters: {
             query?: never;
@@ -123,7 +1295,7 @@ export interface paths {
          * Telegram Connect
          * @description Starts the Telegram flow by handing back a code and a link.
          *
-         *     Telegram's constraint drives the shape: the customer must message the bot
+         *     Telegram's constraint drives the shape: the customer must message the agent
          *     first, so the product cannot ask for an id it has no way to obtain. The
          *     code they send is what lets `poll` identify which chat is theirs.
          */
@@ -145,7 +1317,7 @@ export interface paths {
         put?: never;
         /**
          * Telegram Poll
-         * @description Looks for the code in the bot's recent messages.
+         * @description Looks for the code in the agent's recent messages.
          *
          *     Returns `{"found": false}` rather than an error while waiting - the normal
          *     case is that the customer has not sent it yet, and the dashboard polls
@@ -871,7 +2043,11 @@ export interface paths {
          * @description Exchanges a refresh token for a new pair.
          *
          *     Rotates: the presented token is spent, and presenting it again revokes the
-         *     whole session family - see auth_service for why.
+         *     whole session family - unless it is the same browser a few seconds later,
+         *     which is two tabs rather than a thief. See auth_service for both rules.
+         *
+         *     The session stays in the workspace its token family carries, so a switch
+         *     made an hour ago is still in force.
          */
         post: operations["refresh_api_auth_refresh_post"];
         delete?: never;
@@ -950,6 +2126,78 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/auth/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * My Sessions
+         * @description Where this account is signed in. `current` marks this device.
+         */
+        get: operations["my_sessions_api_auth_sessions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/sessions/{session_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * End My Session
+         * @description Signs one of this account's other devices out, immediately.
+         */
+        delete: operations["end_my_session_api_auth_sessions__session_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/auth/switch-organization": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Switch Organization
+         * @description Moves this session into another workspace.
+         *
+         *     Any workspace the user is a member of, or one beneath it - an agency
+         *     entering a client's workspace acts there with the role it holds above.
+         *     Returns a token pair for the new workspace and rotates the refresh cookie
+         *     into it, so the switch survives every later refresh.
+         *
+         *     Needs both credentials: the access token says who is asking, the refresh
+         *     cookie is what gets moved. A stolen access token alone cannot mint a
+         *     long-lived session this way.
+         *
+         *     404 rather than 403 for a workspace the user cannot enter, so the endpoint
+         *     does not confirm which workspace ids exist.
+         */
+        post: operations["switch_organization_api_auth_switch_organization_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/auth/verification-status": {
         parameters: {
             query?: never;
@@ -987,25 +2235,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/bots": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Bots */
-        get: operations["list_bots_api_bots_get"];
-        put?: never;
-        /** Create Bot */
-        post: operations["create_bot_api_bots_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/generate": {
+    "/api/billing/checkout": {
         parameters: {
             query?: never;
             header?: never;
@@ -1015,27 +2245,21 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Generate Bot
-         * @description Builds a fully-configured bot from one plain-language description.
+         * Checkout
+         * @description Starts a hosted checkout and returns where to send the browser.
          *
-         *     This is the product's main path, not a convenience wrapper: the customer
-         *     describes their business, and everything the advanced screens expose -
-         *     persona, greeting, starter questions, which details to collect and when,
-         *     what to extract from conversation, routing, theme - is inferred. They open
-         *     the advanced screens only to disagree with something.
-         *
-         *     With `import_website`, the site is also crawled into the knowledge base in
-         *     the background, so the bot can answer real questions from its first minute
-         *     rather than being an empty persona.
+         *     The `org_id` goes into the provider's metadata, which is the whole reason
+         *     an event arriving eight hours later can be resolved to a tenant without a
+         *     lookup table anybody has to keep in sync. See `resolve_org`.
          */
-        post: operations["generate_bot_api_bots_generate_post"];
+        post: operations["checkout_api_billing_checkout_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/bots/models": {
+    "/api/billing/entitlements": {
         parameters: {
             query?: never;
             header?: never;
@@ -1043,10 +2267,19 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * Available Models
-         * @description Models this org's plan may select, with measured characteristics.
+         * Read Entitlements
+         * @description What this plan includes, and what the cheapest plan that adds each
+         *     missing piece is.
+         *
+         *     The same answers `entitlements.require` gives when it refuses a request,
+         *     computed up front — so a control the plan does not allow is drawn locked,
+         *     with the right plan named on it, instead of being discovered locked after
+         *     somebody has filled in a form.
+         *
+         *     Not owner-gated: a member who cannot open a client workspace should still be
+         *     told why, and told who can.
          */
-        get: operations["available_models_api_bots_models_get"];
+        get: operations["read_entitlements_api_billing_entitlements_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1055,7 +2288,244 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/bots/onboarding/rehearse": {
+    "/api/billing/overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Overview
+         * @description The whole billing page in one request.
+         *
+         *     Plan, balance, forecast, this month's calculation and - for the owner -
+         *     the five latest payments. The page used to need four requests to draw its
+         *     first screen; this is one, with one balance read shared by every part of
+         *     it, and an ETag so a revisit with nothing changed is a 304.
+         *
+         *     Payments are included only for the owner, for the reason the payments
+         *     endpoint is owner-only: the balance is everybody's business, the company's
+         *     card history is not.
+         */
+        get: operations["overview_api_billing_overview_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/payments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Payment History
+         * @description Every charge on this workspace, newest first, each with its receipt links.
+         */
+        get: operations["payment_history_api_billing_payments_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/payments/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export Payments
+         * @description Every payment as a file - the list an accountant asks for at year end.
+         */
+        get: operations["export_payments_api_billing_payments_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/payments/{payment_id}/receipt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Receipt
+         * @description One receipt as JSON, for rendering in the dashboard.
+         *
+         *     ETag-validated with `no-cache`: a receipt is fixed except for a refund, so
+         *     revalidation almost always returns a bodiless 304, and the refund case
+         *     still shows on the next open rather than an hour later.
+         */
+        get: operations["receipt_api_billing_payments__payment_id__receipt_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/payments/{payment_id}/receipt.html": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Receipt Html
+         * @description The receipt as a printable page in the dashboard's own type.
+         *
+         *     Black and white, one self-contained document with no script. The dashboard
+         *     fetches it with the session's token and shows it in an `iframe srcdoc`, or
+         *     prints it; opened directly it is the same page.
+         */
+        get: operations["receipt_html_api_billing_payments__payment_id__receipt_html_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/payments/{payment_id}/receipt.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Receipt Pdf
+         * @description The receipt as a PDF - the file somebody forwards to their accountant.
+         *
+         *     Rendered synchronously. It is one page of text from a row that is already
+         *     in memory, so a job would add latency and a storage lifecycle to save
+         *     single-digit milliseconds of request time.
+         */
+        get: operations["receipt_pdf_api_billing_payments__payment_id__receipt_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/payments/{payment_id}/tax-invoice.pdf": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Tax Invoice
+         * @description The tax invoice Dodo Payments issued for this payment.
+         *
+         *     Dodo is the merchant of record, so its invoice is the statutory document
+         *     and our receipt is not - see `receipt_service`. Fetched from Dodo on
+         *     demand and never stored: it is Dodo's document, and a copy here is a copy
+         *     that can drift from theirs. Ownership is settled by `build`, which only
+         *     finds a payment inside the caller's own workspace.
+         */
+        get: operations["tax_invoice_api_billing_payments__payment_id__tax_invoice_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/periods": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Periods
+         * @description How every month's credit balance was calculated.
+         *
+         *     Newest first. Each month lists its terms in order - plan allowance, credits
+         *     rolled over (and from how many unused), bought credits carried in,
+         *     upgrades, top-ups, refunds, what was used and by what - then what happened
+         *     at month end: how much rolled over, how much expired, how much bought
+         *     credit carried. The open month shows that close-out as a projection.
+         */
+        get: operations["periods_api_billing_periods_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/periods/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export Periods
+         * @description The credit history as a file.
+         */
+        get: operations["export_periods_api_billing_periods_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/plans": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Plans
+         * @description The price list, and which row the caller is on.
+         *
+         *     Returned together because a pricing table that does not mark the current
+         *     plan makes the customer work out where they are, and that is the one thing
+         *     the page already knows.
+         */
+        get: operations["plans_api_billing_plans_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/portal": {
         parameters: {
             query?: never;
             header?: never;
@@ -1065,22 +2535,116 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Rehearse Blueprint
-         * @description Shows what a candidate assistant would say, before anything is live.
+         * Portal
+         * @description A link into the provider's billing portal.
          *
-         *     An assistant that refuses the first three questions a real visitor would
-         *     ask is one the owner should see refusing them in private. This is the
-         *     difference between a customer who adjusts the configuration and one who
-         *     publishes it, watches it fail in front of a visitor, and leaves.
+         *     Self-serve cancellation and card updates live there. Having it is one of
+         *     the three cheap defences against a $30 dispute in docs/billing_details.md:
+         *     a customer who cannot find how to cancel disputes the charge instead, and
+         *     at these price points a dispute costs more than two months of the plan.
          */
-        post: operations["rehearse_blueprint_api_bots_onboarding_rehearse_post"];
+        post: operations["portal_api_billing_portal_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/bots/onboarding/scan": {
+    "/api/billing/profile": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Profile
+         * @description The billing address and tax registration, for the settings form.
+         */
+        get: operations["get_profile_api_billing_profile_get"];
+        /**
+         * Put Profile
+         * @description Updates the billing profile.
+         *
+         *     Changing this does **not** rewrite past receipts. Every issued receipt
+         *     renders from the snapshot frozen onto its own payment row, so a corrected
+         *     company name applies to future documents and leaves settled ones alone -
+         *     which is the behaviour an auditor expects and the opposite of what a naive
+         *     join would produce.
+         */
+        put: operations["put_profile_api_billing_profile_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/billing/subscription": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Subscription
+         * @description The plan, the balance and what it buys - the billing page header.
+         *
+         *     Not owner-gated. Every dashboard needs the credit balance to render, and a
+         *     member seeing "1,240 credits left" is not a disclosure - it is the number
+         *     that stops them wondering why an answer was refused.
+         */
+        get: operations["subscription_api_billing_subscription_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/blueprints": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Exports */
+        get: operations["list_exports_api_blueprints_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/blueprints/assets/{claim}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Redeem Asset
+         * @description Exchanges a claim for its bytes.
+         *
+         *     Authenticated and entitlement-checked *at the point of use*, which is the
+         *     whole reason the file carries a claim rather than a signed URL.
+         */
+        get: operations["redeem_asset_api_blueprints_assets__claim__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/blueprints/export/{agent_id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1090,23 +2654,17 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Scan Website
-         * @description Reads a business's website, best pages first.
-         *
-         *     Separate from `/generate` so the dashboard can show what was found before
-         *     spending a model call on it - "we read your pricing, FAQ and services
-         *     pages" is the moment a customer starts trusting the thing, and "we could
-         *     not read your site" is a much better first message than a confidently
-         *     wrong assistant.
+         * Export Agent
+         * @description Starts an export. Free on every plan.
          */
-        post: operations["scan_website_api_bots_onboarding_scan_post"];
+        post: operations["export_agent_api_blueprints_export__agent_id__post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/bots/onboarding/variants": {
+    "/api/blueprints/import": {
         parameters: {
             query?: never;
             header?: never;
@@ -1116,62 +2674,29 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Generate Variants
-         * @description Three configurations to choose between.
+         * Import Blueprint
+         * @description Validates and applies in one call, gated on `agent_import`.
          *
-         *     They differ along one axis - how hard the assistant pushes for contact
-         *     details - because that is a decision about the customer's business rather
-         *     than a preference they can adjust later. Tone and verbosity are settings;
-         *     "do you want callbacks or answers" is not.
+         *     Re-validating here rather than trusting a plan id from the client is
+         *     deliberate: a plan the caller hands back is a plan the caller could have
+         *     edited, and this one decides what gets written.
          */
-        post: operations["generate_variants_api_bots_onboarding_variants_post"];
+        post: operations["import_blueprint_api_blueprints_import_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/bots/{bot_id}": {
+    "/api/blueprints/imports/{import_id}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        /** Get Bot */
-        get: operations["get_bot_api_bots__bot_id__get"];
-        put?: never;
-        post?: never;
-        /**
-         * Delete Bot
-         * @description Soft delete: the bot goes offline immediately and is purged after the
-         *     retention window, so an accidental deletion is recoverable.
-         */
-        delete: operations["delete_bot_api_bots__bot_id__delete"];
-        options?: never;
-        head?: never;
-        /** Update Bot */
-        patch: operations["update_bot_api_bots__bot_id__patch"];
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/advice": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Advice
-         * @description The most recent AI recommendations, plus the history behind them.
-         *
-         *     Read, never generated. Producing one costs a real model call over a real
-         *     window and takes seconds; a scheduled job writes them and this shows the
-         *     latest. The history is the persuasive part - a health score that went from
-         *     54 to 71 after somebody acted on the advice is the best evidence this
-         *     feature can offer.
-         */
-        get: operations["advice_api_bots__bot_id__advice_get"];
+        /** Import Status */
+        get: operations["import_status_api_blueprints_imports__import_id__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1180,228 +2705,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/bots/{bot_id}/analytics": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Bot Analytics
-         * @description Overview and daily series for one bot.
-         *
-         *     Carries an `ETag`, because this is the panel a dashboard polls. A client
-         *     that revalidates gets a 304 and no body at all - which on a 90-day series
-         *     is kilobytes per poll, and on a phone is the difference between a refresh
-         *     that feels instant and one that does not.
-         */
-        get: operations["bot_analytics_api_bots__bot_id__analytics_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/analytics/gaps": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Knowledge Gaps
-         * @description Questions the bot could not answer.
-         *
-         *     The most directly actionable panel in the product: it is the evidence for
-         *     what the knowledge base is missing.
-         */
-        get: operations["knowledge_gaps_api_bots__bot_id__analytics_gaps_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/analytics/insights": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Bot Insights
-         * @description The three numbers that answer "is it working".
-         *
-         *     Volume tells a customer the assistant ran. This tells them whether it
-         *     helped: how often it resolved a conversation without a person, what people
-         *     ask about, and how often each of those topics goes wrong.
-         *
-         *     Returned together rather than as three endpoints because they are read
-         *     together and each is a small query - three round trips from a browser on a
-         *     phone costs more than the queries do.
-         */
-        get: operations["bot_insights_api_bots__bot_id__analytics_insights_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/archive": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Export Archive
-         * @description Downloads recent conversations as a portable, verifiable bundle.
-         *
-         *     The file is self-describing JSON with a checksum and a signature, so it
-         *     can be kept, mailed to somebody, and brought back later to be looked at -
-         *     including by a customer who has cancelled, which is a promise worth making
-         *     and cheap to keep.
-         *
-         *     `redact=true` strips names, emails, phone numbers and the visitor id while
-         *     keeping every transcript and every number derived from them. It exists
-         *     because the most common reason to export chats is to send them to
-         *     somebody, and the second most common regret is having sent personal data
-         *     with them.
-         */
-        get: operations["export_archive_api_bots__bot_id__archive_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/contacts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List Contacts
-         * @description One row per person, deduplicated across sessions and devices - unlike
-         *     /conversations, which is one row per session.
-         */
-        get: operations["list_contacts_api_bots__bot_id__contacts_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/contacts/export": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Export Contacts */
-        get: operations["export_contacts_api_bots__bot_id__contacts_export_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/contacts/{contact_id}/data": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Export Subject Data
-         * @description Everything held about one person, for a subject access request.
-         *
-         *     Article 15 asks for a copy of the personal data undergoing processing in a
-         *     commonly used electronic form. The tenant is the controller and this is
-         *     what lets them answer without opening a support ticket with us.
-         */
-        get: operations["export_subject_data_api_bots__bot_id__contacts__contact_id__data_get"];
-        put?: never;
-        post?: never;
-        /**
-         * Erase Subject Data
-         * @description Article 17 erasure, in whichever of the two forms the tenant chooses.
-         *
-         *     `redact` strips the identifiers and keeps the transcripts, so the analytics
-         *     they paid for survive and what remains points at nobody. `delete` removes
-         *     the conversations outright - easier to defend, and it takes their own
-         *     history with it.
-         *
-         *     A parameter rather than a policy, because the choice is the controller's:
-         *     it is their lawful basis and their retention obligations, and deciding for
-         *     them would be us making their compliance decision for them.
-         */
-        delete: operations["erase_subject_data_api_bots__bot_id__contacts__contact_id__data_delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/conversations": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * List Conversations
-         * @description One page of conversations.
-         *
-         *     `cursor` is the mode to use for anything that walks the whole list -
-         *     exports, infinite scroll, an integration syncing conversations. It is
-         *     constant-cost at any depth and stable while new conversations arrive;
-         *     `page` is neither, and exists because a numbered pager needs it.
-         *
-         *     `search_transcript=true` widens `q` from metadata - visitor, page, contact
-         *     details, title - to what was actually *said*, using the full-text index
-         *     that has been in the schema since the first migration and, until now, was
-         *     referenced by no query in the codebase.
-         *
-         *     `count=false` skips the `COUNT(*)`, which is the half of the request that
-         *     scans. `total` comes back as -1 and `has_more` is the field to read.
-         *
-         *     `outcome`, `sentiment`, `intent`, `min_rating` / `max_rating`,
-         *     `min_lead_score` and the date bounds are what make the insight panels
-         *     lead somewhere. Before them, the dashboard could tell a customer that 22%
-         *     of their pricing conversations were refused and offer no way to open those
-         *     twelve conversations - which is a report, not a tool.
-         */
-        get: operations["list_conversations_api_bots__bot_id__conversations_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/conversations/bulk": {
+    "/api/blueprints/transfer": {
         parameters: {
             query?: never;
             header?: never;
@@ -1411,191 +2715,23 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Bulk Update Conversations
-         * @description Resolve, reopen or delete a batch of conversations.
+         * Transfer
+         * @description Moves an agent between two workspaces in one agency tree.
          *
-         *     Every item reports its own outcome. A bulk endpoint that returns `200 OK`
-         *     after partially failing is worse than one that does not exist, because the
-         *     operator believes it worked and finds out from a customer.
-         *
-         *     The batch is capped rather than queued. At 200 items this comfortably fits
-         *     inside a request; the point at which it would not is the point at which the
-         *     right answer is a job, not a longer timeout.
+         *     Not a general "copy to any workspace I can reach": the precondition is a
+         *     shared agency root, checked in `service.assert_same_agency`. Two separate
+         *     businesses are two tenants even when one person holds both logins, and
+         *     configuration crossing between them belongs in a file that arrives as
+         *     untrusted input - which is what export and import are for.
          */
-        post: operations["bulk_update_conversations_api_bots__bot_id__conversations_bulk_post"];
+        post: operations["transfer_api_blueprints_transfer_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/bots/{bot_id}/conversations/{conversation_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Get Conversation */
-        get: operations["get_conversation_api_bots__bot_id__conversations__conversation_id__get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/dashboard": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Bot Dashboard
-         * @description One bot's dashboard, at whichever depth the reader asked for.
-         *
-         *     Carries an ETag. This is the panel a dashboard polls and the advanced
-         *     payload is tens of kilobytes; a client that revalidates gets a 304 and no
-         *     body, which on a phone is the difference between a refresh that feels
-         *     instant and one that does not.
-         */
-        get: operations["bot_dashboard_api_bots__bot_id__dashboard_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/duplicate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Duplicate Bot */
-        post: operations["duplicate_bot_api_bots__bot_id__duplicate_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/embed": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Embed
-         * @description The snippet a customer pastes, in two forms.
-         *
-         *     `snippet` is the one almost everybody wants: a stable URL that picks up
-         *     every widget improvement without them touching their HTML again.
-         *
-         *     `pinned_snippet` is for the customer whose change-control process forbids a
-         *     third-party script that can change under them - which is most enterprises,
-         *     and the question arrives during a security review rather than during a
-         *     trial. It names the content-hashed build and carries an `integrity` hash,
-         *     so the browser refuses to execute anything but the exact bytes that were
-         *     reviewed.
-         *
-         *     Pinning is offered, never defaulted. A pinned embed stops receiving fixes,
-         *     including security ones, until somebody edits their page - so it has to be
-         *     a decision the customer makes rather than one we make for them.
-         */
-        get: operations["get_embed_api_bots__bot_id__embed_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/funnel": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Get Funnel
-         * @description Impressions, opens and abandonment - the funnel above the first message.
-         *
-         *     Everything else in the dashboard starts counting at a conversation, which
-         *     means the most-asked question of month two has never had an answer here.
-         */
-        get: operations["get_funnel_api_bots__bot_id__funnel_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/intents": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Intents
-         * @description What visitors wanted, who is worth calling back, and what to fix.
-         *
-         *     `coverage` comes back with every panel built on classification. A
-         *     breakdown covering 12% of conversations is not wrong, but presenting it
-         *     without saying so invites reading a sample as the whole - and the
-         *     classifier runs on a schedule, so on a busy day it is genuinely behind.
-         */
-        get: operations["intents_api_bots__bot_id__intents_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/knowledge": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Documents */
-        get: operations["list_documents_api_bots__bot_id__knowledge_get"];
-        put?: never;
-        /**
-         * Create Document
-         * @description Adds pasted text, a single URL, or a whole site to the knowledge base.
-         *
-         *     URLs and sitemaps are fetched by a worker, not here: reaching an arbitrary
-         *     third-party site can take twenty seconds and fail in a dozen ways, none of
-         *     which should happen while a customer waits on a form.
-         */
-        post: operations["create_document_api_bots__bot_id__knowledge_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/knowledge/search": {
+    "/api/blueprints/validate": {
         parameters: {
             query?: never;
             header?: never;
@@ -1605,85 +2741,25 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Search Knowledge
-         * @description Runs the bot's own retrieval and shows exactly what comes back.
-         *
-         *     The fastest way to diagnose a bad answer: it separates "the model reasoned
-         *     poorly" from "the right passage was never retrieved", which are different
-         *     problems with different fixes.
+         * Validate Blueprint
+         * @description What importing this file would do. Writes nothing, free on every plan.
          */
-        post: operations["search_knowledge_api_bots__bot_id__knowledge_search_post"];
+        post: operations["validate_blueprint_api_blueprints_validate_post"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/api/bots/{bot_id}/knowledge/upload": {
+    "/api/blueprints/{blueprint_id}/download": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get?: never;
-        put?: never;
-        /**
-         * Upload Document
-         * @description Accepts a file upload.
-         *
-         *     The size cap is enforced **while reading**, not after. `await file.read()`
-         *     on an unbounded upload buffers the whole body into memory first, so a
-         *     single large request can exhaust a 512 MB container before any check runs -
-         *     which is a denial-of-service an authenticated user can trigger by accident.
-         */
-        post: operations["upload_document_api_bots__bot_id__knowledge_upload_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/knowledge/{document_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** Delete Document */
-        delete: operations["delete_document_api_bots__bot_id__knowledge__document_id__delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/knowledge/{document_id}/download": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Download Document
-         * @description A short-lived signed link to the file the customer originally uploaded.
-         *
-         *     Returns the URL rather than the bytes. Proxying a download through the API
-         *     holds a worker for as long as somebody's connection lasts, which is a poor
-         *     use of a small container when the object store does this natively - and the
-         *     signature is what enforces the tenant boundary, not the redirect.
-         *
-         *     404 rather than 204 when no original exists, because "this document has no
-         *     stored source" and "no such document" are the same answer to a caller: there
-         *     is nothing here to download. Documents added as pasted text or crawled URLs
-         *     never had a source file, and documents uploaded before this shipped were not
-         *     kept.
-         */
-        get: operations["download_document_api_bots__bot_id__knowledge__document_id__download_get"];
+        /** Download */
+        get: operations["download_api_blueprints__blueprint_id__download_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1692,73 +2768,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/bots/{bot_id}/knowledge/{document_id}/reindex": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Reindex Document */
-        post: operations["reindex_document_api_bots__bot_id__knowledge__document_id__reindex_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/knowledge/{document_id}/status": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Document Status
-         * @description Polled after upload until the document reaches a terminal state.
-         */
-        get: operations["document_status_api_bots__bot_id__knowledge__document_id__status_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/report": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Bot Report
-         * @description The whole dashboard as a file, in any of five formats.
-         *
-         *     All five are renderings of one `Report` object, which is the property that
-         *     matters: a customer who exports the same period as a spreadsheet and as a
-         *     PDF and finds two different numbers has learned something about this
-         *     product that no amount of later accuracy undoes.
-         *
-         *     `advanced` by default here, unlike the screen. Somebody who chose to
-         *     download a file has asked for the data; the mode switch inside the HTML
-         *     export still lets them read it simply.
-         */
-        get: operations["bot_report_api_bots__bot_id__report_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/rotate-key": {
+    "/api/blueprints/{blueprint_id}/revoke": {
         parameters: {
             query?: never;
             header?: never;
@@ -1768,215 +2778,12 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Rotate Key
-         * @description Issues a new embed key. Every existing embed of this bot stops working.
+         * Revoke
+         * @description Stops every attachment claim on a blueprint that went astray.
+         *
+         *     The thing a presigned URL inside a forwarded file could never offer.
          */
-        post: operations["rotate_key_api_bots__bot_id__rotate_key_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/satisfaction": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Satisfaction
-         * @description CSAT and sentiment, with the trend and the conversations behind it.
-         *
-         *     Both numbers have been collected since the widget shipped and aggregated
-         *     by nothing. This endpoint adds no writes and no dependency - the whole cost
-         *     of the feature had already been paid.
-         */
-        get: operations["satisfaction_api_bots__bot_id__satisfaction_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/suggest-improvements": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Suggest Improvements
-         * @description Reviews the questions this bot answered badly and proposes fixes.
-         *
-         *     Closes the loop that manual prompt engineering leaves open - the failures
-         *     are already recorded, and nobody reads transcripts by hand.
-         */
-        post: operations["suggest_improvements_api_bots__bot_id__suggest_improvements_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/test": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Test Message
-         * @description Sends one message through the same retrieval and generation path the
-         *     widget uses, without creating a conversation.
-         *
-         *     Rate-limited despite being authenticated: it is an unmetered paid model
-         *     call, and an authenticated user scripting it is a cost-denial vector as
-         *     real as an anonymous one.
-         */
-        post: operations["test_message_api_bots__bot_id__test_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/theme/avatar": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Upload Avatar
-         * @description Uploads the assistant's avatar and points the theme at it.
-         *
-         *     `widget_theme.avatar_url` has been settable since themes existed, with
-         *     nothing behind it - a tenant could name an image they hosted themselves and
-         *     had no way to supply one otherwise. Object storage removed that blocker on
-         *     2026-08-29; this is the endpoint that was left.
-         *
-         *     The size cap is enforced *while reading*, as it is on document upload and
-         *     for the same reason: `await file.read()` on an unbounded body buffers the
-         *     whole thing before any check runs, so one large request can exhaust the
-         *     container before the limit is consulted.
-         *
-         *     The file's type is read from its bytes, never from the `Content-Type` the
-         *     uploader claims - see `app.platform.images`. The stored object is served to
-         *     every visitor of the tenant's website, and an attacker-chosen type there is
-         *     how an avatar becomes `text/html` on our own origin.
-         */
-        post: operations["upload_avatar_api_bots__bot_id__theme_avatar_post"];
-        /**
-         * Delete Avatar
-         * @description Removes the avatar and clears the theme field.
-         *
-         *     The field is cleared even when the object could not be deleted. The tenant
-         *     asked to stop showing the image; refusing that because storage was
-         *     unreachable would leave it on their website to protect an invariant only we
-         *     care about. The orphaned object is caught by the storage reconcile.
-         */
-        delete: operations["delete_avatar_api_bots__bot_id__theme_avatar_delete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/theme/generate": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Generate Theme
-         * @description A palette from a sentence, or from the customer's own website.
-         *
-         *     Returns the theme without saving it unless `apply` is set. A colour scheme
-         *     is the most visible thing about a widget and the cheapest to disagree with,
-         *     so the default is to propose rather than to change - the tenant sees it in
-         *     the preview and decides.
-         *
-         *     The palette is contrast-corrected before it is returned, not validated and
-         *     rejected. Failing this request because a model chose a slightly too-light
-         *     grey would leave the customer with an error about a hex code they never
-         *     picked; correcting it and telling them what changed is the useful version
-         *     of the same rule. See `theme_service.readable_theme`.
-         */
-        post: operations["generate_theme_api_bots__bot_id__theme_generate_post"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/traffic": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Traffic
-         * @description Website traffic, not just widget traffic.
-         *
-         *     The denominator the funnel never had: how many people were on the site at
-         *     all. "42 opens" is a number with no scale; "42 of 3,140 visitors" is the
-         *     thing that makes a free customer upgrade.
-         */
-        get: operations["traffic_api_bots__bot_id__traffic_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/versions": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List Versions */
-        get: operations["list_versions_api_bots__bot_id__versions_get"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/bots/{bot_id}/versions/{version}/restore": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Restore Version */
-        post: operations["restore_version_api_bots__bot_id__versions__version__restore_post"];
+        post: operations["revoke_api_blueprints__blueprint_id__revoke_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2124,9 +2931,14 @@ export interface paths {
          * Credits
          * @description The balance, where it is going, and when it runs out.
          *
-         *     Three things together because they are read together and each is one small
-         *     query. The forecast is the part that changes behaviour: "1,240 credits
-         *     left" invites no action, and "at this rate you run out on the 19th" does.
+         *     Read together because they are shown together, with one balance read
+         *     shared between the header and the forecast. The forecast is the part that
+         *     changes behaviour: "1,240 credits left" invites no action, and "at this
+         *     rate you run out on the 19th" does.
+         *
+         *     Values are in credits; totals also carry `value_usd`, the credits at the
+         *     rate the customer buys them. No single action carries a dollar figure, and
+         *     what an action cost *us* is never in this response.
          */
         get: operations["credits_api_credits_get"];
         put?: never;
@@ -2191,14 +3003,157 @@ export interface paths {
         };
         /**
          * Org Dashboard
-         * @description Every bot in the organisation, rolled up and compared.
+         * @description Every agent in the organisation, rolled up and compared.
          *
-         *     The gap this closes: `/overview` was the only cross-bot view, its window
-         *     was hard-coded, and it showed no satisfaction and no per-bot comparison. A
-         *     customer with four assistants had to open four pages to find out which one
+         *     The gap this closes: `/overview` was the only cross-agent view, its window
+         *     was hard-coded, and it showed no satisfaction and no per-agent comparison. A
+         *     customer with four agents had to open four pages to find out which one
          *     was working.
          */
         get: operations["org_dashboard_api_dashboard_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/data-tables": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Tables
+         * @description Every table in the organization, or the ones a given agent would use.
+         *
+         *     With `agent_id` the answer is what that agent actually sees - its own tables
+         *     plus the org-wide ones - which is a different question from "tables
+         *     belonging to this agent" and the one worth answering, because it is what the
+         *     model will be handed.
+         */
+        get: operations["list_tables_api_data_tables_get"];
+        put?: never;
+        /** Create Table */
+        post: operations["create_table_api_data_tables_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/data-tables/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Preview Upload
+         * @description Headers, a guessed mapping and a few rows - nothing stored.
+         *
+         *     Separate from the import because the roles are the security boundary.
+         *     Applying an inferred mapping silently would mean a column named
+         *     `customer_address` becomes readable because it contains the word
+         *     "address", and the first anyone knows is a visitor being read a stranger's
+         *     street.
+         */
+        post: operations["preview_upload_api_data_tables_preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/data-tables/{table_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Table */
+        delete: operations["delete_table_api_data_tables__table_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Table */
+        patch: operations["update_table_api_data_tables__table_id__patch"];
+        trace?: never;
+    };
+    "/api/data-tables/{table_id}/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Import Csv
+         * @description Loads rows against the confirmed mapping.
+         *
+         *     `replace` defaults to true because the spreadsheet is the source of truth:
+         *     a row the merchant deleted should stop being answerable, and an import that
+         *     only ever added would leave cancelled orders live forever.
+         */
+        post: operations["import_csv_api_data_tables__table_id__import_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/data-tables/{table_id}/lookup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Test Lookup
+         * @description The same lookup a live turn performs, including the verifier check.
+         *
+         *     Deliberately not a "show me row N" endpoint. A test button that skipped
+         *     verification would pass for a table that leaks in production, which is
+         *     worse than having no test button - it would actively certify the leak.
+         */
+        post: operations["test_lookup_api_data_tables__table_id__lookup_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/data-tables/{table_id}/rows": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Row Previews
+         * @description Masked keys only, so the dashboard can show a table loaded correctly.
+         *
+         *     Not the rows themselves. An admin can already read their own customers'
+         *     data through the export path, which is audited; adding a second, unaudited
+         *     way to page through it here would be a quieter one - and this endpoint
+         *     exists to answer "did my import work", which a masked key answers.
+         */
+        get: operations["list_row_previews_api_data_tables__table_id__rows_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2277,6 +3232,58 @@ export interface paths {
         /** Start Connect */
         post: operations["start_connect_api_destinations__provider__connect_post"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/drafts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Drafts
+         * @description Everything this person has left unsaved.
+         */
+        get: operations["list_drafts_api_drafts_get"];
+        /**
+         * Save Draft
+         * @description Saves this person's in-progress edit.
+         */
+        put: operations["save_draft_api_drafts_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/drafts/{resource_type}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Load Draft
+         * @description Restores a draft, and says whether it is safe to apply.
+         *
+         *     `stale: true` means the underlying row changed while this draft sat
+         *     unsaved. The client must offer a choice rather than restoring over
+         *     somebody else's change - see the service docstring.
+         */
+        get: operations["load_draft_api_drafts__resource_type__get"];
+        put?: never;
+        post?: never;
+        /**
+         * Discard Draft
+         * @description Throws a draft away - called when the real save succeeds.
+         */
+        delete: operations["discard_draft_api_drafts__resource_type__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2441,7 +3448,7 @@ export interface paths {
          *     waited longest waits forever.
          *
          *     `total` is -1 - this is a keyset-paginated queue with no count. The number
-         *     an agent needs is on each row (`waiting_seconds`), not in a total.
+         *     a teammate needs is on each row (`waiting_seconds`), not in a total.
          */
         get: operations["list_inbox_api_inbox_get"];
         put?: never;
@@ -2465,7 +3472,7 @@ export interface paths {
          * Claim
          * @description Takes ownership of a waiting conversation.
          *
-         *     Conflicts - 409 - if another agent claimed it first. That is the expected
+         *     Conflicts - 409 - if another teammate claimed it first. That is the expected
          *     outcome of two people working the same inbox, not an error condition, and
          *     the message names the situation so the client can refresh rather than
          *     retry.
@@ -2510,7 +3517,7 @@ export interface paths {
          * Reply
          * @description Sends a message the visitor will see.
          *
-         *     Written as an assistant-role message carrying `author_user_id` - see
+         *     Written as an agent-role message carrying `author_user_id` - see
          *     `handoff_service` for why that is not a new role. The visitor's widget
          *     picks it up on its next poll of `/messages`.
          */
@@ -2534,7 +3541,7 @@ export interface paths {
          * Resolve
          * @description Ends the human's involvement.
          *
-         *     By default the assistant resumes, because most handoffs are one question in
+         *     By default the agent resumes, because most handoffs are one question in
          *     a session that carries on afterwards.
          */
         post: operations["resolve_api_inbox__conversation_id__resolve_post"];
@@ -2564,6 +3571,388 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/leads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Leads
+         * @description One row per person, newest activity first.
+         *
+         *     A *person*, not a contact: somebody who spoke to three of the workspace's
+         *     agents is one row here and three in `contacts`, which is the whole
+         *     reason this layer exists.
+         */
+        get: operations["list_leads_api_leads_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/leads/fields": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Rule Fields
+         * @description What a rule may be built from: fields, operators, stages, grades.
+         *
+         *     Served rather than hard-coded in the client so a field added to the
+         *     compiler appears in the rule builder without a front-end release, and - the
+         *     part that matters - so the builder can never offer an operator the compiler
+         *     refuses.
+         */
+        get: operations["rule_fields_api_leads_fields_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/leads/organise": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Organise Now
+         * @description Runs the hourly pass for this workspace immediately.
+         *
+         *     Synchronous rather than queued, because the answer people want is "what did
+         *     my rule just do" and a job id is not that. Bounded by `service.BATCH`, so
+         *     the worst case is one batch of identities rather than the whole table.
+         */
+        post: operations["organise_now_api_leads_organise_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/leads/rules": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Rules */
+        get: operations["list_rules_api_leads_rules_get"];
+        put?: never;
+        /** Create Rule */
+        post: operations["create_rule_api_leads_rules_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/leads/rules/{rule_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete Rule */
+        delete: operations["delete_rule_api_leads_rules__rule_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Rule */
+        patch: operations["update_rule_api_leads_rules__rule_id__patch"];
+        trace?: never;
+    };
+    "/api/leads/segments": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Segments */
+        get: operations["list_segments_api_leads_segments_get"];
+        put?: never;
+        /** Create Segment */
+        post: operations["create_segment_api_leads_segments_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/leads/segments/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Preview Segment
+         * @description How many people a definition selects, and who a few of them are.
+         *
+         *     Writes nothing. This is the endpoint a rule builder calls as somebody
+         *     types, and the sample is what turns "412 leads" into something they can
+         *     check before sending anything to them.
+         */
+        post: operations["preview_segment_api_leads_segments_preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/leads/segments/{segment_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read Segment */
+        get: operations["read_segment_api_leads_segments__segment_id__get"];
+        put?: never;
+        post?: never;
+        /** Delete Segment */
+        delete: operations["delete_segment_api_leads_segments__segment_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Segment */
+        patch: operations["update_segment_api_leads_segments__segment_id__patch"];
+        trace?: never;
+    };
+    "/api/leads/segments/{segment_id}/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Refresh Segment
+         * @description Re-runs the definition and adds anyone newly matching.
+         *
+         *     Never removes. Somebody who has already been mailed stays in the record of
+         *     who was mailed, which is the same argument `campaign_recipients` makes.
+         */
+        post: operations["refresh_segment_api_leads_segments__segment_id__refresh_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/logs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Request Logs
+         * @description This workspace's API traffic, newest first.
+         *
+         *     Only requests authenticated with an API key appear here. The dashboard's
+         *     own calls are not logged - they are not anybody's integration, and logging
+         *     them would bury the rows that are.
+         *
+         *     Metadata only: no request or response bodies are recorded, ever. Retention
+         *     follows the plan, from one day on Free to a year on Enterprise.
+         */
+        get: operations["list_request_logs_api_logs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/logs/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Request Log Summary
+         * @description Volume, error rate, latency and the busiest endpoints over a window.
+         *
+         *     p95 rather than only a mean: a mean hides the case somebody is actually
+         *     debugging, which is a call that is usually fast and occasionally is not.
+         */
+        get: operations["request_log_summary_api_logs_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/inbox": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Inbox
+         * @description One page of notifications, newest first.
+         *
+         *     An agency sees its client workspaces' notifications here too, each labelled
+         *     with the workspace it came from; `org_id` narrows to one of them.
+         */
+        get: operations["list_inbox_api_notifications_inbox_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/inbox/archive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Archive
+         * @description Files notifications away. With no ids, archives everything already read,
+         *     which is the "clear" button and never discards something unseen.
+         */
+        post: operations["archive_api_notifications_inbox_archive_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/inbox/preferences": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read Preferences */
+        get: operations["read_preferences_api_notifications_inbox_preferences_get"];
+        /**
+         * Write Preferences
+         * @description Mutes categories in this workspace, for this person only.
+         *
+         *     Per workspace on purpose: somebody who runs an agency and helps a friend
+         *     with theirs wants lead notifications from one and not the other.
+         */
+        put: operations["write_preferences_api_notifications_inbox_preferences_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/inbox/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark Read */
+        post: operations["mark_read_api_notifications_inbox_read_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/inbox/summary": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Inbox Summary
+         * @description Unread counts for the bell. The only call a client makes on a timer.
+         */
+        get: operations["inbox_summary_api_notifications_inbox_summary_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/inbox/unarchive": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Unarchive */
+        post: operations["unarchive_api_notifications_inbox_unarchive_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/notifications/inbox/unread": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Mark Unread */
+        post: operations["mark_unread_api_notifications_inbox_unread_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/notifications/preferences": {
         parameters: {
             query?: never;
@@ -2585,6 +3974,420 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/outreach/campaigns": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Campaigns */
+        get: operations["list_campaigns_api_outreach_campaigns_get"];
+        put?: never;
+        /** Create Campaign */
+        post: operations["create_campaign_api_outreach_campaigns_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/campaigns/{campaign_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read Campaign */
+        get: operations["read_campaign_api_outreach_campaigns__campaign_id__get"];
+        put?: never;
+        post?: never;
+        /** Delete Campaign */
+        delete: operations["delete_campaign_api_outreach_campaigns__campaign_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Campaign */
+        patch: operations["update_campaign_api_outreach_campaigns__campaign_id__patch"];
+        trace?: never;
+    };
+    "/api/outreach/campaigns/{campaign_id}/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancel Campaign
+         * @description Also never gated, for the same reason as pause.
+         */
+        post: operations["cancel_campaign_api_outreach_campaigns__campaign_id__cancel_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/campaigns/{campaign_id}/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Generate Campaign
+         * @description Writes a sequence with a model and saves it as a draft.
+         *
+         *     One call for the whole sequence, whatever the segment size - the model
+         *     writes templates, not five hundred emails. Nothing it produces can send:
+         *     the campaign stays a draft and `readiness` still has to pass.
+         */
+        post: operations["generate_campaign_api_outreach_campaigns__campaign_id__generate_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/campaigns/{campaign_id}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Campaign Messages
+         * @description The send log. Masked addresses only - see the migration docstring.
+         */
+        get: operations["campaign_messages_api_outreach_campaigns__campaign_id__messages_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/campaigns/{campaign_id}/pause": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Pause Campaign
+         * @description Never gated. A stop button behind a plan check is an incident.
+         */
+        post: operations["pause_campaign_api_outreach_campaigns__campaign_id__pause_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/campaigns/{campaign_id}/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Preview Campaign
+         * @description The sequence rendered against real leads from its segment.
+         */
+        get: operations["preview_campaign_api_outreach_campaigns__campaign_id__preview_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/campaigns/{campaign_id}/readiness": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Campaign Readiness
+         * @description Every reason this campaign cannot send yet, at once.
+         *
+         *     A checklist rather than the first failure: somebody wants to see all four
+         *     problems and fix them in one sitting.
+         */
+        get: operations["campaign_readiness_api_outreach_campaigns__campaign_id__readiness_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/campaigns/{campaign_id}/resume": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Resume Campaign */
+        post: operations["resume_campaign_api_outreach_campaigns__campaign_id__resume_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/campaigns/{campaign_id}/schedule": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Schedule Campaign
+         * @description The one-way door: enrols the audience and starts sending.
+         */
+        post: operations["schedule_campaign_api_outreach_campaigns__campaign_id__schedule_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/campaigns/{campaign_id}/steps": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Set Steps */
+        put: operations["set_steps_api_outreach_campaigns__campaign_id__steps_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/dns-records": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Dns Records
+         * @description The records to publish, before anything is saved.
+         *
+         *     Shown on the form rather than after a failed verification, so somebody can
+         *     paste them at their registrar and come back - instead of saving, failing,
+         *     and being told what they should have done.
+         */
+        get: operations["dns_records_api_outreach_dns_records_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/identities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Identities */
+        get: operations["list_identities_api_outreach_identities_get"];
+        put?: never;
+        /**
+         * Create Identity
+         * @description Stores a tenant's own sending credential.
+         *
+         *     **Free on every plan, including free.** Connecting your own mail server is
+         *     not a feature to sell; it is the condition on which we are willing to let
+         *     anybody send at all.
+         */
+        post: operations["create_identity_api_outreach_identities_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/identities/{identity_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read Identity */
+        get: operations["read_identity_api_outreach_identities__identity_id__get"];
+        put?: never;
+        post?: never;
+        /** Delete Identity */
+        delete: operations["delete_identity_api_outreach_identities__identity_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update Identity */
+        patch: operations["update_identity_api_outreach_identities__identity_id__patch"];
+        trace?: never;
+    };
+    "/api/outreach/identities/{identity_id}/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Check Identity
+         * @description Connects and authenticates, and looks up SPF, DKIM and DMARC. Sends nothing.
+         */
+        post: operations["check_identity_api_outreach_identities__identity_id__check_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/identities/{identity_id}/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Test Identity
+         * @description Sends one real message. This is what sets `verified_at`.
+         *
+         *     A credential that authenticates and a mailbox that actually receives are
+         *     different facts, and campaign scheduling is gated on the second one.
+         */
+        post: operations["test_identity_api_outreach_identities__identity_id__test_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Options
+         * @description Everything a setup screen needs, so nothing is hard-coded in the client.
+         */
+        get: operations["options_api_outreach_options_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/run": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Run Now
+         * @description Runs one sending tick for this workspace's due enrollments.
+         *
+         *     Exists so somebody who just scheduled a campaign sees the first message
+         *     leave rather than waiting up to a minute and wondering. Rate limited hard,
+         *     because it is the only endpoint that makes us send mail on demand.
+         */
+        post: operations["run_now_api_outreach_run_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/suppressions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Suppressions */
+        get: operations["list_suppressions_api_outreach_suppressions_get"];
+        put?: never;
+        /** Add Suppression */
+        post: operations["add_suppression_api_outreach_suppressions_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/outreach/suppressions/{email_bidx}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Remove Suppression
+         * @description Only lifts a manual entry. A bounce stays, permanently.
+         *
+         *     Re-mailing an address that hard-bounced is how a sending domain gets
+         *     blocked, so the delete is scoped to reasons a person chose.
+         */
+        delete: operations["remove_suppression_api_outreach_suppressions__email_bidx__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/overview": {
         parameters: {
             query?: never;
@@ -2594,7 +4397,7 @@ export interface paths {
         };
         /**
          * Org Overview
-         * @description The dashboard home page: cross-bot totals plus plan usage.
+         * @description The dashboard home page: cross-agent totals plus plan usage.
          */
         get: operations["org_overview_api_overview_get"];
         put?: never;
@@ -2639,9 +4442,56 @@ export interface paths {
         };
         /**
          * Org Report
-         * @description The organisation-wide report: every bot, rolled up, plus credits.
+         * @description The organisation-wide report: every agent, rolled up, plus credits.
          */
         get: operations["org_report_api_report_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/stream": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Open Stream
+         * @description Server-sent events for this workspace.
+         *
+         *     `Last-Event-ID` is read from the header first, because that is what
+         *     `EventSource` sends on its own reconnect; the query parameter exists for
+         *     clients that cannot set headers.
+         */
+        get: operations["open_stream_api_stream_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/stream/topics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Topics
+         * @description What a client may subscribe to, and what the budget is.
+         *
+         *     Published rather than documented, so a client can render "live updates
+         *     paused" honestly instead of guessing why a stream closed.
+         */
+        get: operations["list_topics_api_stream_topics_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2812,11 +4662,11 @@ export interface paths {
         };
         /**
          * List Tools
-         * @description Every tool in the organization, or the ones a given bot would be offered.
+         * @description Every tool in the organization, or the ones a given agent would be offered.
          *
-         *     With `bot_id` the result is what that bot actually sees: its own tools plus
+         *     With `agent_id` the result is what that agent actually sees: its own tools plus
          *     the org-wide ones. That is a different question from "tools belonging to
-         *     this bot", and it is the one worth answering, because it is what the model
+         *     this agent", and it is the one worth answering, because it is what the model
          *     will be handed.
          */
         get: operations["list_tools_api_tools_get"];
@@ -2938,6 +4788,121 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/usage/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Export
+         * @description The usage page and every reply behind it, as a file.
+         *
+         *     `csv` is the reply log alone - one row per reply, the table a spreadsheet
+         *     wants. The other formats carry the summary, breakdowns and chart as well.
+         *     Capped at `usage_service.EXPORT_MAX_ROWS` replies; the file says so when
+         *     the cap was reached.
+         */
+        get: operations["export_api_usage_export_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/usage/filters": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Filters
+         * @description The models, agents and channels that have replies in the window.
+         */
+        get: operations["filters_api_usage_filters_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/usage/generations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Generations
+         * @description Every AI reply, newest first: model, tokens, credits, speed, outcome.
+         *
+         *     Cursor-paginated. Pass `next_cursor` back as `cursor` with the same filters
+         *     for the next page; `has_more` is false on the last.
+         */
+        get: operations["generations_api_usage_generations_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/usage/generations/{message_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Generation
+         * @description One reply in full: tokens, charge, speed, what it cited and which tools ran.
+         *
+         *     Immutable once written, so it is cached privately for an hour and carries
+         *     an ETag - opening the same row twice costs nothing the second time.
+         */
+        get: operations["generation_api_usage_generations__message_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/usage/overview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Overview
+         * @description Totals, comparison, breakdowns by model/agent/channel, chart, activity.
+         *
+         *     Everything the usage page draws in one response. `headline` is a sentence
+         *     ready to render; `comparison` holds percent changes against the window of
+         *     equal length immediately before, `null` where there is nothing to compare.
+         */
+        get: operations["overview_api_usage_overview_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/views": {
         parameters: {
             query?: never;
@@ -2949,8 +4914,8 @@ export interface paths {
          * List Saved Views
          * @description Named filter sets for the conversation and contact lists.
          *
-         *     Org-wide views come back alongside a bot's own, because a view scoped to
-         *     the organization is meant to be usable from every bot in it.
+         *     Org-wide views come back alongside an agent's own, because a view scoped to
+         *     the organization is meant to be usable from every agent in it.
          */
         get: operations["list_saved_views_api_views_get"];
         put?: never;
@@ -2989,10 +4954,10 @@ export interface paths {
         };
         /**
          * List Webhooks
-         * @description Every endpoint in the workspace, or the ones a given bot's events reach.
+         * @description Every endpoint in the workspace, or the ones a given agent's events reach.
          *
-         *     With `bot_id` the answer includes org-wide endpoints, because the question
-         *     being asked is "where do this bot's events go" - and an org-wide endpoint
+         *     With `agent_id` the answer includes org-wide endpoints, because the question
+         *     being asked is "where do this agent's events go" - and an org-wide endpoint
          *     is one of the places they go.
          */
         get: operations["list_webhooks_api_webhooks_get"];
@@ -3208,6 +5173,26 @@ export interface paths {
         patch: operations["update_workspace_api_workspace_patch"];
         trace?: never;
     };
+    "/api/workspace/capabilities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Capability Catalogue
+         * @description The capabilities an agency may withhold, and the ready-made presets.
+         */
+        get: operations["capability_catalogue_api_workspace_capabilities_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspace/encryption": {
         parameters: {
             query?: never;
@@ -3356,6 +5341,87 @@ export interface paths {
         patch: operations["change_member_role_api_workspace_members__user_id__patch"];
         trace?: never;
     };
+    "/api/workspace/pool": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Read Pool
+         * @description Every workspace drawing on this agency's pool, and the commitment total.
+         *
+         *     Over-allocation is reported rather than refused: ten clients at 10,000
+         *     against a 79,000 pool is over-committed by 21,000, and that is usually
+         *     correct - allocations are ceilings, and most clients never reach theirs.
+         *     Refusing would force an agency to provision every client against a worst
+         *     case that never arrives.
+         */
+        get: operations["read_pool_api_workspace_pool_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspace/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Workspace Sessions */
+        get: operations["list_workspace_sessions_api_workspace_sessions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspace/sessions/revoke": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * End Workspace Sessions
+         * @description Bulk: chosen sessions, chosen people, or `everyone` in the workspace
+         *     (or one sub-account with `org_id`). The caller's own session is spared.
+         */
+        post: operations["end_workspace_sessions_api_workspace_sessions_revoke_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspace/sessions/{session_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** End Workspace Session */
+        delete: operations["end_workspace_session_api_workspace_sessions__session_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/workspace/sub-accounts": {
         parameters: {
             query?: never;
@@ -3371,9 +5437,14 @@ export interface paths {
          * @description Opens a workspace for a client, beneath this one.
          *
          *     Nobody is added to it. The client gets access by accepting an invitation;
-         *     until then the agency administers it through this workspace. See
+         *     until then the agency administers it through this workspace, or by
+         *     entering it with `POST /api/auth/switch-organization`. See
          *     `app/domains/tenancy/service.py` for why a membership would be the wrong
          *     mechanism.
+         *
+         *     A plan feature: 402 `plan_feature_required` below Agency. Existing client
+         *     workspaces are never taken away by a downgrade - only opening new ones is
+         *     gated.
          */
         post: operations["create_sub_account_api_workspace_sub_accounts_post"];
         delete?: never;
@@ -3398,6 +5469,56 @@ export interface paths {
         head?: never;
         /** Update Sub Account */
         patch: operations["update_sub_account_api_workspace_sub_accounts__sub_account_id__patch"];
+        trace?: never;
+    };
+    "/api/workspace/sub-accounts/{sub_account_id}/allocation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Set Allocation
+         * @description Sets one client workspace's ceiling for the current period.
+         *
+         *     Lowering it below what has already been spent is permitted and does exactly
+         *     what it says: further draws stop, nothing is clawed back. Retroactively
+         *     invalidating spend that already happened is not something a money system
+         *     may do.
+         */
+        put: operations["set_allocation_api_workspace_sub_accounts__sub_account_id__allocation_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/workspace/sub-accounts/{sub_account_id}/capabilities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Read Capabilities */
+        get: operations["read_capabilities_api_workspace_sub_accounts__sub_account_id__capabilities_get"];
+        /**
+         * Set Capabilities
+         * @description Sets what a client workspace may do inside itself.
+         *
+         *     The mask can only ever remove - see `delegation.effective`. Audited into
+         *     **both** logs: the agency's because they did it, the client's because it
+         *     happened to them.
+         */
+        put: operations["set_capabilities_api_workspace_sub_accounts__sub_account_id__capabilities_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/health": {
@@ -3455,47 +5576,16 @@ export interface components {
             /** Token */
             token: string;
         };
-        /** Body_import_archive_api_archive_import_post */
-        Body_import_archive_api_archive_import_post: {
-            /**
-             * File
-             * @description A chat archive exported from here
-             */
-            file: string;
-        };
-        /** Body_upload_avatar_api_bots__bot_id__theme_avatar_post */
-        Body_upload_avatar_api_bots__bot_id__theme_avatar_post: {
-            /** File */
-            file: string;
-        };
-        /** Body_upload_document_api_bots__bot_id__knowledge_upload_post */
-        Body_upload_document_api_bots__bot_id__knowledge_upload_post: {
-            /** File */
-            file: string;
-            /** Title */
-            title?: string | null;
-        };
-        /** BookRequest */
-        BookRequest: {
-            /** Attendee Email */
-            attendee_email?: string | null;
-            /** Attendee Name */
-            attendee_name?: string | null;
-            /** Description */
-            description?: string | null;
-            /**
-             * Start
-             * Format: date-time
-             */
-            start: string;
-            /** Summary */
-            summary: string;
+        /** AcceptRequest */
+        AcceptRequest: {
+            /** Label */
+            label?: string | null;
         };
         /**
-         * BotBlueprint
-         * @description The generated configuration, before it becomes a bot.
+         * AgentBlueprint
+         * @description The generated configuration, before it becomes an agent.
          */
-        BotBlueprint: {
+        AgentBlueprint: {
             /** Contact Fields Config */
             contact_fields_config: unknown[];
             /** Description */
@@ -3506,6 +5596,11 @@ export interface components {
             } | null;
             /** Fallback Message */
             fallback_message: string;
+            /**
+             * Field Discovery
+             * @default false
+             */
+            field_discovery: boolean;
             /** Industry */
             industry: string;
             /** Language */
@@ -3533,8 +5628,8 @@ export interface components {
                 [key: string]: unknown;
             };
         };
-        /** BotCreate */
-        BotCreate: {
+        /** AgentCreate */
+        AgentCreate: {
             /** Allowed Domains */
             allowed_domains?: string[] | null;
             /** Api Key */
@@ -3547,6 +5642,11 @@ export interface components {
             directory_config?: components["schemas"]["DirectoryConfig"] | null;
             /** Fallback Message */
             fallback_message?: string | null;
+            /**
+             * Field Discovery
+             * @default false
+             */
+            field_discovery: boolean;
             /** Handoff Config */
             handoff_config?: {
                 [key: string]: unknown;
@@ -3614,10 +5714,10 @@ export interface components {
             widget_theme?: components["schemas"]["WidgetTheme"];
         };
         /**
-         * BotGenerateRequest
-         * @description One-prompt bot creation.
+         * AgentGenerateRequest
+         * @description One-prompt agent creation.
          */
-        BotGenerateRequest: {
+        AgentGenerateRequest: {
             /**
              * Activate
              * @default false
@@ -3625,7 +5725,7 @@ export interface components {
             activate: boolean;
             /**
              * Description
-             * @description What the business does, who it serves, and what the bot should do.
+             * @description What the business does, who it serves, and what the agent should do.
              */
             description: string;
             /**
@@ -3639,10 +5739,10 @@ export interface components {
              */
             website_url?: string | null;
         };
-        /** BotGenerateResponse */
-        BotGenerateResponse: {
-            blueprint: components["schemas"]["BotBlueprint"];
-            bot?: components["schemas"]["BotRead"] | null;
+        /** AgentGenerateResponse */
+        AgentGenerateResponse: {
+            agent?: components["schemas"]["AgentRead"] | null;
+            blueprint: components["schemas"]["AgentBlueprint"];
             /** Embed Snippet */
             embed_snippet?: string | null;
             /**
@@ -3651,8 +5751,8 @@ export interface components {
              */
             import_job_queued: boolean;
         };
-        /** BotRead */
-        BotRead: {
+        /** AgentRead */
+        AgentRead: {
             /** Allowed Domains */
             allowed_domains: string[] | null;
             /** Contact Fields Config */
@@ -3674,6 +5774,11 @@ export interface components {
             } | null;
             /** Fallback Message */
             fallback_message: string | null;
+            /**
+             * Field Discovery
+             * @default false
+             */
+            field_discovery: boolean;
             /** Handoff Enabled */
             handoff_enabled: boolean;
             /**
@@ -3712,7 +5817,7 @@ export interface components {
             rate_limit_per_minute: number;
             /** Starter Questions */
             starter_questions: string[];
-            status: components["schemas"]["BotStatus"];
+            status: components["schemas"]["AgentStatus"];
             /** Strict Kb Mode */
             strict_kb_mode: boolean;
             /** System Prompt */
@@ -3738,17 +5843,17 @@ export interface components {
             };
         };
         /**
-         * BotStatus
+         * AgentStatus
          * @enum {string}
          */
-        BotStatus: "draft" | "active" | "paused" | "archived";
+        AgentStatus: "draft" | "active" | "paused" | "archived";
         /**
-         * BotUpdate
+         * AgentUpdate
          * @description Every field optional - PATCH semantics. Only keys present in the request
          *     body are applied, so a client can update one field without needing to
          *     round-trip the whole object and risk clobbering a concurrent edit.
          */
-        BotUpdate: {
+        AgentUpdate: {
             /** Allowed Domains */
             allowed_domains?: string[] | null;
             /** Api Key */
@@ -3761,6 +5866,8 @@ export interface components {
             directory_config?: components["schemas"]["DirectoryConfig"] | null;
             /** Fallback Message */
             fallback_message?: string | null;
+            /** Field Discovery */
+            field_discovery?: boolean | null;
             /** Handoff Config */
             handoff_config?: {
                 [key: string]: unknown;
@@ -3785,7 +5892,7 @@ export interface components {
             rate_limit_per_minute?: number | null;
             /** Starter Questions */
             starter_questions?: string[] | null;
-            status?: components["schemas"]["BotStatus"] | null;
+            status?: components["schemas"]["AgentStatus"] | null;
             /** Strict Kb Mode */
             strict_kb_mode?: boolean | null;
             /** System Prompt */
@@ -3800,8 +5907,8 @@ export interface components {
             welcome_message?: string | null;
             widget_theme?: components["schemas"]["WidgetTheme"] | null;
         };
-        /** BotVersionRead */
-        BotVersionRead: {
+        /** AgentVersionRead */
+        AgentVersionRead: {
             /**
              * Created At
              * Format: date-time
@@ -3815,6 +5922,135 @@ export interface components {
             };
             /** Version */
             version: number;
+        };
+        /**
+         * AllocationUpdate
+         * @description A ceiling on the agency's pool for one client workspace.
+         *
+         *     `null` means "draw freely" - not zero. The two are genuinely different and
+         *     the difference is somebody's agent answering or not, so the field is
+         *     nullable rather than defaulting to a number.
+         */
+        AllocationUpdate: {
+            /** Allocated */
+            allocated?: number | null;
+        };
+        /**
+         * BillingProfileIn
+         * @description The addressee for receipts, and the tax registration to print on them.
+         */
+        BillingProfileIn: {
+            /**
+             * Address Line1
+             * @default
+             */
+            address_line1: string;
+            /**
+             * Address Line2
+             * @default
+             */
+            address_line2: string;
+            /**
+             * Billing Email
+             * @default
+             */
+            billing_email: string;
+            /**
+             * City
+             * @default
+             */
+            city: string;
+            /**
+             * Country Code
+             * @default
+             */
+            country_code: string;
+            /**
+             * Legal Name
+             * @default
+             */
+            legal_name: string;
+            /**
+             * Postal Code
+             * @default
+             */
+            postal_code: string;
+            /**
+             * State Code
+             * @default
+             */
+            state_code: string;
+            /**
+             * Tax Id
+             * @default
+             */
+            tax_id: string;
+            /**
+             * Tax Id Type
+             * @default
+             */
+            tax_id_type: string;
+            /**
+             * Timezone
+             * @default
+             */
+            timezone: string;
+        };
+        /** Body_import_archive_api_archive_import_post */
+        Body_import_archive_api_archive_import_post: {
+            /**
+             * File
+             * @description A chat archive exported from here
+             */
+            file: string;
+        };
+        /** Body_import_blueprint_api_blueprints_import_post */
+        Body_import_blueprint_api_blueprints_import_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_import_csv_api_data_tables__table_id__import_post */
+        Body_import_csv_api_data_tables__table_id__import_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_preview_upload_api_data_tables_preview_post */
+        Body_preview_upload_api_data_tables_preview_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_upload_avatar_api_agents__agent_id__theme_avatar_post */
+        Body_upload_avatar_api_agents__agent_id__theme_avatar_post: {
+            /** File */
+            file: string;
+        };
+        /** Body_upload_document_api_agents__agent_id__knowledge_upload_post */
+        Body_upload_document_api_agents__agent_id__knowledge_upload_post: {
+            /** File */
+            file: string;
+            /** Title */
+            title?: string | null;
+        };
+        /** Body_validate_blueprint_api_blueprints_validate_post */
+        Body_validate_blueprint_api_blueprints_validate_post: {
+            /** File */
+            file: string;
+        };
+        /** BookRequest */
+        BookRequest: {
+            /** Attendee Email */
+            attendee_email?: string | null;
+            /** Attendee Name */
+            attendee_name?: string | null;
+            /** Description */
+            description?: string | null;
+            /**
+             * Start
+             * Format: date-time
+             */
+            start: string;
+            /** Summary */
+            summary: string;
         };
         /**
          * BulkConversationUpdate
@@ -3859,18 +6095,88 @@ export interface components {
             /** Succeeded */
             succeeded: number;
         };
+        /** CampaignBody */
+        CampaignBody: {
+            /** Description */
+            description?: string | null;
+            /** Name */
+            name: string;
+            /** Segment Id */
+            segment_id?: string | null;
+            /** Sending Identity Id */
+            sending_identity_id?: string | null;
+            /** Settings */
+            settings?: {
+                [key: string]: unknown;
+            };
+            /**
+             * Shape
+             * @default personal
+             */
+            shape: string;
+        };
+        /** CampaignPatch */
+        CampaignPatch: {
+            /** Description */
+            description?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Segment Id */
+            segment_id?: string | null;
+            /** Sending Identity Id */
+            sending_identity_id?: string | null;
+            /** Settings */
+            settings?: {
+                [key: string]: unknown;
+            } | null;
+            /** Shape */
+            shape?: string | null;
+        };
         /**
          * Category
          * @description A kind of lifecycle email, and the unit a person can turn off.
          * @enum {string}
          */
-        Category: "leads" | "handoff" | "content" | "usage" | "health" | "digest" | "product" | "bookings";
+        Category: "leads" | "handoff" | "content" | "usage" | "health" | "digest" | "product" | "bookings" | "onboarding";
         /** ChangePasswordRequest */
         ChangePasswordRequest: {
             /** Current Password */
             current_password: string;
             /** New Password */
             new_password: string;
+        };
+        /**
+         * CheckoutRequest
+         * @description What to buy. Notably absent: any price, and any product id.
+         */
+        CheckoutRequest: {
+            /**
+             * Quantity
+             * @default 1
+             */
+            quantity: number;
+            /**
+             * Tier
+             * @description One of the purchasable tiers, or 'topup'
+             */
+            tier: string;
+        };
+        /** ColumnSpec */
+        ColumnSpec: {
+            /** Key */
+            key: string;
+            /** Label */
+            label?: string | null;
+            /**
+             * Role
+             * @default hidden
+             */
+            role: string;
+            /**
+             * Type
+             * @default string
+             */
+            type: string;
         };
         /** ConnectResponse */
         ConnectResponse: {
@@ -4026,10 +6332,10 @@ export interface components {
             /** Title */
             title?: string | null;
             /**
-             * Total Cost Usd
+             * Total Credits
              * @default 0
              */
-            total_cost_usd: number;
+            total_credits: number;
             /**
              * Total Input Tokens
              * @default 0
@@ -4100,11 +6406,6 @@ export interface components {
             summary?: string | null;
             /** Title */
             title?: string | null;
-            /**
-             * Total Cost Usd
-             * @default 0
-             */
-            total_cost_usd: number;
             /** Visitor Id */
             visitor_id: string;
         };
@@ -4134,12 +6435,12 @@ export interface components {
          *     through a second colour picker they did not ask for.
          */
         DarkPalette: {
+            /** Agent Bubble Bg */
+            agent_bubble_bg?: string | null;
+            /** Agent Bubble Text */
+            agent_bubble_text?: string | null;
             /** Border Color */
             border_color?: string | null;
-            /** Bot Bubble Bg */
-            bot_bubble_bg?: string | null;
-            /** Bot Bubble Text */
-            bot_bubble_text?: string | null;
             /** Messages Bg */
             messages_bg?: string | null;
             /** Panel Bg */
@@ -4150,6 +6451,91 @@ export interface components {
             user_bubble_text?: string | null;
         } & {
             [key: string]: unknown;
+        };
+        /** DataTableCreate */
+        DataTableCreate: {
+            /** Agent Id */
+            agent_id?: string | null;
+            /** Columns */
+            columns?: components["schemas"]["ColumnSpec"][];
+            /** Description */
+            description: string;
+            /** Name */
+            name: string;
+            /**
+             * Panels Enabled
+             * @default true
+             */
+            panels_enabled: boolean;
+            /**
+             * Status Before Verify
+             * @default true
+             */
+            status_before_verify: boolean;
+        };
+        /** DataTableResponse */
+        DataTableResponse: {
+            /** Agent Id */
+            agent_id: string | null;
+            /** Columns */
+            columns: {
+                [key: string]: unknown;
+            }[];
+            /** Description */
+            description: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Is Enabled */
+            is_enabled: boolean;
+            /** Is Usable */
+            is_usable: boolean;
+            /** Last Error */
+            last_error: string | null;
+            /** Last Synced At */
+            last_synced_at: unknown | null;
+            /** Max Rows */
+            max_rows: number;
+            /** Name */
+            name: string;
+            /** Panels Enabled */
+            panels_enabled: boolean;
+            /** Row Count */
+            row_count: number;
+            /** Status Before Verify */
+            status_before_verify: boolean;
+            /** Tool Name */
+            tool_name: string;
+        };
+        /** DataTableUpdate */
+        DataTableUpdate: {
+            /** Columns */
+            columns?: components["schemas"]["ColumnSpec"][] | null;
+            /** Description */
+            description?: string | null;
+            /** Is Enabled */
+            is_enabled?: boolean | null;
+            /** Name */
+            name?: string | null;
+            /** Panels Enabled */
+            panels_enabled?: boolean | null;
+            /** Status Before Verify */
+            status_before_verify?: boolean | null;
+        };
+        /**
+         * DelegationUpdate
+         * @description What a client workspace may do inside itself.
+         *
+         *     Exactly one of `preset` or `capabilities`. A preset is what almost everyone
+         *     wants; the list is for the agency with a specific arrangement.
+         */
+        DelegationUpdate: {
+            /** Capabilities */
+            capabilities?: string[] | null;
+            /** Preset */
+            preset?: ("managed" | "collaborative" | "autonomous") | null;
         };
         /**
          * DirectoryConfig
@@ -4212,6 +6598,30 @@ export interface components {
             };
             /** Name */
             name: string;
+        };
+        /** DiscoveredFieldResponse */
+        DiscoveredFieldResponse: {
+            /** Contact Count */
+            contact_count: number;
+            /** First Seen At */
+            first_seen_at: unknown;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Label */
+            label: string;
+            /** Last Seen At */
+            last_seen_at: unknown;
+            /** Observation Count */
+            observation_count: number;
+            /** Samples */
+            samples: unknown[];
+            /** Slug */
+            slug: string;
+            /** Status */
+            status: string;
         };
         /** DocumentCreate */
         DocumentCreate: {
@@ -4316,6 +6726,19 @@ export interface components {
             /** Status */
             status: string;
         };
+        /** DraftSave */
+        DraftSave: {
+            /** Base Revision */
+            base_revision?: string | null;
+            /** Payload */
+            payload?: {
+                [key: string]: unknown;
+            };
+            /** Resource Id */
+            resource_id?: string | null;
+            /** Resource Type */
+            resource_type: string;
+        };
         /**
          * EmailOnlyRequest
          * @description Shared by forgot-password, resend-verification and otp/request.
@@ -4379,13 +6802,21 @@ export interface components {
             /** Events */
             events: string[];
         };
+        /** ExportRequest */
+        ExportRequest: {
+            /**
+             * Include Data Rows
+             * @default false
+             */
+            include_data_rows: boolean;
+        };
         /** FlowSave */
         FlowSave: {
             /**
-             * Bot Id
+             * Agent Id
              * Format: uuid
              */
-            bot_id: string;
+            agent_id: string;
             /** Description */
             description?: string | null;
             /** Graph */
@@ -4396,6 +6827,25 @@ export interface components {
             name: string;
             /** Trigger */
             trigger?: string | null;
+        };
+        /** GenerateBody */
+        GenerateBody: {
+            /** Audience */
+            audience: string;
+            /** Goal */
+            goal: string;
+            /** Product */
+            product?: string | null;
+            /**
+             * Steps
+             * @default 4
+             */
+            steps: number;
+            /**
+             * Tone
+             * @default direct and warm
+             */
+            tone: string;
         };
         /** GoogleCallbackRequest */
         GoogleCallbackRequest: {
@@ -4472,6 +6922,52 @@ export interface components {
             /** Slug */
             slug: string;
         };
+        /** IdentityBody */
+        IdentityBody: {
+            /**
+             * From Email
+             * Format: email
+             */
+            from_email: string;
+            /** From Name */
+            from_name?: string | null;
+            /**
+             * Kind
+             * @default smtp
+             */
+            kind: string;
+            /** Name */
+            name: string;
+            /** Reply To */
+            reply_to?: string | null;
+            /** Secret */
+            secret?: {
+                [key: string]: string;
+            };
+            /** Settings */
+            settings?: {
+                [key: string]: unknown;
+            };
+        };
+        /** IdentityPatch */
+        IdentityPatch: {
+            /** Daily Cap */
+            daily_cap?: number | null;
+            /** From Name */
+            from_name?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Reply To */
+            reply_to?: string | null;
+            /** Secret */
+            secret?: {
+                [key: string]: string;
+            } | null;
+            /** Settings */
+            settings?: {
+                [key: string]: unknown;
+            } | null;
+        };
         /** IdentityRead */
         IdentityRead: {
             /**
@@ -4486,16 +6982,34 @@ export interface components {
             /** Provider */
             provider: string;
         };
+        /** IdsRequest */
+        IdsRequest: {
+            /** Category */
+            category?: string | null;
+            /** Ids */
+            ids?: string[] | null;
+        };
+        /** ImportResponse */
+        ImportResponse: {
+            /** Imported */
+            imported: number;
+            /** Skipped */
+            skipped: number;
+            /** Total Rows */
+            total_rows: number;
+            /** Warnings */
+            warnings: string[];
+        };
         /** InboxItem */
         InboxItem: {
+            /** Agent Id */
+            agent_id: string;
             /** Assigned At */
             assigned_at?: unknown;
             /** Assigned To Id */
             assigned_to_id?: string | null;
             /** Assigned To Name */
             assigned_to_name?: string | null;
-            /** Bot Id */
-            bot_id: string;
             /** Contact Email */
             contact_email?: string | null;
             /** Contact Name */
@@ -4548,7 +7062,7 @@ export interface components {
          * @description What the acceptance page may know before anyone has signed in.
          *
          *     Deliberately thin. Holding the token earns the workspace's name - enough to
-         *     answer "join what?" - and nothing else: no member list, no bots, no counts.
+         *     answer "join what?" - and nothing else: no member list, no agents, no counts.
          */
         InvitationPreview: {
             /** Email */
@@ -4663,6 +7177,26 @@ export interface components {
             /** Password */
             password: string;
         };
+        /** LookupRequest */
+        LookupRequest: {
+            /** Key */
+            key: string;
+            /** Verify */
+            verify?: string | null;
+        };
+        /** LookupResponse */
+        LookupResponse: {
+            /** Fields */
+            fields: {
+                [key: string]: unknown;
+            };
+            /** Found */
+            found: boolean;
+            /** Message */
+            message: string;
+            /** Verified */
+            verified: boolean;
+        };
         /** MemberRead */
         MemberRead: {
             /** Avatar Url */
@@ -4714,13 +7248,13 @@ export interface components {
             }[] | null;
             /** Content */
             content: string;
-            /** Cost Usd */
-            cost_usd?: number | null;
             /**
              * Created At
              * Format: date-time
              */
             created_at: string;
+            /** Credits */
+            credits?: number | null;
             /** Error Code */
             error_code?: string | null;
             /** Id */
@@ -4847,8 +7381,24 @@ export interface components {
         };
         /** OrgRead */
         OrgRead: {
+            /**
+             * Access
+             * @default member
+             * @enum {string}
+             */
+            access: "member" | "agency";
             /** Id */
             id: string;
+            /**
+             * Is Active
+             * @default true
+             */
+            is_active: boolean;
+            /**
+             * Is Current
+             * @default false
+             */
+            is_current: boolean;
             /**
              * Is Default
              * @default false
@@ -4897,15 +7447,15 @@ export interface components {
              */
             email: string;
         };
-        /** PaginatedResponse[BotRead] */
-        PaginatedResponse_BotRead_: {
+        /** PaginatedResponse[AgentRead] */
+        PaginatedResponse_AgentRead_: {
             /**
              * Has More
              * @default false
              */
             has_more: boolean;
             /** Items */
-            items: components["schemas"]["BotRead"][];
+            items: components["schemas"]["AgentRead"][];
             /** Next Cursor */
             next_cursor?: string | null;
             /** Page */
@@ -5025,8 +7575,8 @@ export interface components {
         };
         /** PolicyRequest */
         PolicyRequest: {
-            /** Bot Id */
-            bot_id?: string | null;
+            /** Agent Id */
+            agent_id?: string | null;
             /** Channel */
             channel: string;
             /** Daily Cap */
@@ -5101,10 +7651,42 @@ export interface components {
             /** Preferences */
             preferences: components["schemas"]["PreferenceOut"][];
         };
+        /** PreferencesRequest */
+        PreferencesRequest: {
+            /** Muted */
+            muted?: string[];
+        };
         /** PreferencesUpdate */
         PreferencesUpdate: {
             /** Changes */
             changes: components["schemas"]["PreferenceUpdate"][];
+        };
+        /** PreviewBody */
+        PreviewBody: {
+            /** Definition */
+            definition: {
+                [key: string]: unknown;
+            };
+            /**
+             * Limit
+             * @default 25
+             */
+            limit: number;
+        };
+        /** PreviewResponse */
+        PreviewResponse: {
+            /** Columns */
+            columns: {
+                [key: string]: unknown;
+            }[];
+            /** Headers */
+            headers: string[];
+            /** Row Count */
+            row_count: number;
+            /** Sample */
+            sample: {
+                [key: string]: string;
+            }[];
         };
         /**
          * ProactiveTrigger
@@ -5180,10 +7762,10 @@ export interface components {
         /** ResolveRequest */
         ResolveRequest: {
             /**
-             * Back To Bot
+             * Back To Agent
              * @default true
              */
-            back_to_bot: boolean;
+            back_to_agent: boolean;
         };
         /** RotateSecretResponse */
         RotateSecretResponse: {
@@ -5194,6 +7776,50 @@ export interface components {
             rotated_at: string;
             /** Secret */
             secret: string;
+        };
+        /** RuleBody */
+        RuleBody: {
+            /** Actions */
+            actions: {
+                [key: string]: unknown;
+            };
+            /** Definition */
+            definition: {
+                [key: string]: unknown;
+            };
+            /** Description */
+            description?: string | null;
+            /**
+             * Is Enabled
+             * @default true
+             */
+            is_enabled: boolean;
+            /** Name */
+            name: string;
+            /**
+             * Priority
+             * @default 100
+             */
+            priority: number;
+        };
+        /** RulePatch */
+        RulePatch: {
+            /** Actions */
+            actions?: {
+                [key: string]: unknown;
+            } | null;
+            /** Definition */
+            definition?: {
+                [key: string]: unknown;
+            } | null;
+            /** Description */
+            description?: string | null;
+            /** Is Enabled */
+            is_enabled?: boolean | null;
+            /** Name */
+            name?: string | null;
+            /** Priority */
+            priority?: number | null;
         };
         /**
          * SavedViewCreate
@@ -5206,8 +7832,8 @@ export interface components {
          *     vocabulary keeps the two in step by construction.
          */
         SavedViewCreate: {
-            /** Bot Id */
-            bot_id?: string | null;
+            /** Agent Id */
+            agent_id?: string | null;
             /** Filters */
             filters?: {
                 [key: string]: unknown;
@@ -5243,7 +7869,7 @@ export interface components {
         };
         /**
          * SearchRequest
-         * @description Exposed so a tenant can see exactly what their bot retrieves for a
+         * @description Exposed so a tenant can see exactly what their agent retrieves for a
          *     question - the fastest way to diagnose a bad answer.
          */
         SearchRequest: {
@@ -5285,6 +7911,40 @@ export interface components {
             /** Score */
             score: number;
         };
+        /** SegmentBody */
+        SegmentBody: {
+            /** Definition */
+            definition?: {
+                [key: string]: unknown;
+            };
+            /** Description */
+            description?: string | null;
+            /**
+             * Is Continuous
+             * @default false
+             */
+            is_continuous: boolean;
+            /**
+             * Kind
+             * @default rule
+             */
+            kind: string;
+            /** Name */
+            name: string;
+        };
+        /** SegmentPatch */
+        SegmentPatch: {
+            /** Definition */
+            definition?: {
+                [key: string]: unknown;
+            } | null;
+            /** Description */
+            description?: string | null;
+            /** Is Continuous */
+            is_continuous?: boolean | null;
+            /** Name */
+            name?: string | null;
+        };
         /** Simulation */
         Simulation: {
             /** Answers */
@@ -5293,6 +7953,62 @@ export interface components {
             graph?: {
                 [key: string]: unknown;
             } | null;
+        };
+        /** SmsProviderRequest */
+        SmsProviderRequest: {
+            /**
+             * Account Id
+             * @default
+             */
+            account_id: string;
+            /** Secret */
+            secret?: string | null;
+            /**
+             * Sender Id
+             * @default
+             */
+            sender_id: string;
+            /**
+             * Url
+             * @default
+             */
+            url: string;
+            /** Vendor */
+            vendor: string;
+        };
+        /** StepBody */
+        StepBody: {
+            /** Body */
+            body: string;
+            /** Body Html */
+            body_html?: string | null;
+            /**
+             * Delay Hours
+             * @default 0
+             */
+            delay_hours: number;
+            /** Name */
+            name?: string | null;
+            /**
+             * Personalise
+             * @default false
+             */
+            personalise: boolean;
+            /** Send Window */
+            send_window?: {
+                [key: string]: unknown;
+            };
+            /** Stop Conditions */
+            stop_conditions?: {
+                [key: string]: unknown;
+            };
+            /** Subject */
+            subject: string;
+        };
+        /** StepsBody */
+        StepsBody: {
+            /** Steps */
+            steps: components["schemas"]["StepBody"][];
         };
         /** SubAccountCreate */
         SubAccountCreate: {
@@ -5307,10 +8023,10 @@ export interface components {
         /** SubAccountRead */
         SubAccountRead: {
             /**
-             * Bot Count
+             * Agent Count
              * @default 0
              */
-            bot_count: number;
+            agent_count: number;
             /**
              * Conversation Count
              * @default 0
@@ -5337,6 +8053,28 @@ export interface components {
             /** Slug */
             slug: string;
         };
+        /** SuppressBody */
+        SuppressBody: {
+            /** Email Bidx */
+            email_bidx: string;
+            /** Note */
+            note?: string | null;
+        };
+        /** SwitchOrganizationRequest */
+        SwitchOrganizationRequest: {
+            /**
+             * Make Default
+             * @default false
+             */
+            make_default: boolean;
+            /**
+             * Org Id
+             * Format: uuid
+             */
+            org_id: string;
+            /** Refresh Token */
+            refresh_token?: string | null;
+        };
         /** TestMessageRequest */
         TestMessageRequest: {
             /** Message */
@@ -5352,8 +8090,8 @@ export interface components {
             }[];
             /** Content */
             content: string;
-            /** Cost Usd */
-            cost_usd: number;
+            /** Credits */
+            credits: number;
             /** Input Tokens */
             input_tokens: number;
             /** Latency Ms */
@@ -5362,6 +8100,14 @@ export interface components {
             model: string;
             /** Output Tokens */
             output_tokens: number;
+        };
+        /** TestSendBody */
+        TestSendBody: {
+            /**
+             * To
+             * Format: email
+             */
+            to: string;
         };
         /**
          * ThemeGenerateRequest
@@ -5380,10 +8126,10 @@ export interface components {
         };
         /** TicketCreate */
         TicketCreate: {
+            /** Agent Id */
+            agent_id?: string | null;
             /** Body */
             body: string;
-            /** Bot Id */
-            bot_id?: string | null;
             /**
              * Category
              * @default other
@@ -5432,6 +8178,8 @@ export interface components {
         };
         /** ToolCreate */
         ToolCreate: {
+            /** Agent Id */
+            agent_id?: string | null;
             /**
              * Auth Kind
              * @default none
@@ -5452,8 +8200,6 @@ export interface components {
             body_mode: "none" | "arguments" | "template";
             /** Body Template */
             body_template?: unknown;
-            /** Bot Id */
-            bot_id?: string | null;
             /** Description */
             description: string;
             /** Display Name */
@@ -5515,17 +8261,17 @@ export interface components {
          * @description One row of the action audit log.
          */
         ToolInvocationResponse: {
+            /**
+             * Agent Id
+             * Format: uuid
+             */
+            agent_id: string;
             /** Arguments */
             arguments: {
                 [key: string]: unknown;
             };
             /** Attempts */
             attempts: number;
-            /**
-             * Bot Id
-             * Format: uuid
-             */
-            bot_id: string;
             /** Call Id */
             call_id: string;
             /** Conversation Id */
@@ -5562,6 +8308,8 @@ export interface components {
          * @description What the API returns. Note what is absent: `auth_secret`.
          */
         ToolResponse: {
+            /** Agent Id */
+            agent_id: string | null;
             /**
              * Auth Configured
              * @default false
@@ -5577,8 +8325,6 @@ export interface components {
             body_mode: string;
             /** Body Template */
             body_template?: unknown;
-            /** Bot Id */
-            bot_id: string | null;
             /** Call Count */
             call_count: number;
             /**
@@ -5686,6 +8432,8 @@ export interface components {
          *     and then re-validated as a whole - see `service.update_tool`.
          */
         ToolUpdate: {
+            /** Agent Id */
+            agent_id?: string | null;
             /** Auth Kind */
             auth_kind?: ("none" | "bearer" | "header" | "basic" | "query") | null;
             /** Auth Name */
@@ -5698,8 +8446,6 @@ export interface components {
             body_mode?: ("none" | "arguments" | "template") | null;
             /** Body Template */
             body_template?: unknown;
-            /** Bot Id */
-            bot_id?: string | null;
             /** Description */
             description?: string | null;
             /** Display Name */
@@ -5736,6 +8482,26 @@ export interface components {
             timeout_ms?: number | null;
             /** Url Template */
             url_template?: string | null;
+        };
+        /** TransferRequest */
+        TransferRequest: {
+            /**
+             * Agent Id
+             * Format: uuid
+             */
+            agent_id: string;
+            /**
+             * Mode
+             * @default plan
+             */
+            mode: string;
+            /** Name */
+            name?: string | null;
+            /**
+             * Target Org Id
+             * Format: uuid
+             */
+            target_org_id: string;
         };
         /** UserRead */
         UserRead: {
@@ -5804,8 +8570,8 @@ export interface components {
          *     receiver has to store whatever it is told either way.
          */
         WebhookCreate: {
-            /** Bot Id */
-            bot_id?: string | null;
+            /** Agent Id */
+            agent_id?: string | null;
             /** Description */
             description?: string | null;
             /** Events */
@@ -5828,10 +8594,10 @@ export interface components {
          *     appearing on a list endpoint.
          */
         WebhookCreated: {
+            /** Agent Id */
+            agent_id: string | null;
             /** Api Version */
             api_version: string;
-            /** Bot Id */
-            bot_id: string | null;
             /** Consecutive Failures */
             consecutive_failures: number;
             /**
@@ -5933,10 +8699,10 @@ export interface components {
          * @description What the API returns. Note what is absent: `secret_encrypted`.
          */
         WebhookResponse: {
+            /** Agent Id */
+            agent_id: string | null;
             /** Api Version */
             api_version: string;
-            /** Bot Id */
-            bot_id: string | null;
             /** Consecutive Failures */
             consecutive_failures: number;
             /**
@@ -6054,7 +8820,7 @@ export interface components {
          *
          *     A theme produced by the one-prompt generator is **repaired** before it
          *     reaches this class - see `generation_service._readable_theme`. Failing an
-         *     entire bot generation because a model picked a hex nobody asked for, and
+         *     entire agent generation because a model picked a hex nobody asked for, and
          *     which the customer will never see, would be an absurd way to lose a signup.
          *
          *     Two policies, one definition of readable, which is why the definition lives
@@ -6063,6 +8829,16 @@ export interface components {
         WidgetTheme: {
             /** Accent Color */
             accent_color?: string | null;
+            /**
+             * Agent Bubble Bg
+             * @default #FFFFFF
+             */
+            agent_bubble_bg: string;
+            /**
+             * Agent Bubble Text
+             * @default #0F172A
+             */
+            agent_bubble_text: string;
             /** Avatar Url */
             avatar_url?: string | null;
             /**
@@ -6070,16 +8846,6 @@ export interface components {
              * @default #E2E8F0
              */
             border_color: string;
-            /**
-             * Bot Bubble Bg
-             * @default #FFFFFF
-             */
-            bot_bubble_bg: string;
-            /**
-             * Bot Bubble Text
-             * @default #0F172A
-             */
-            bot_bubble_text: string;
             /**
              * Bubble Radius
              * @default 16
@@ -6229,6 +8995,20 @@ export interface components {
         } & {
             [key: string]: unknown;
         };
+        /** WorkspaceSessionRevoke */
+        WorkspaceSessionRevoke: {
+            /**
+             * Everyone
+             * @default false
+             */
+            everyone: boolean;
+            /** Org Id */
+            org_id?: string | null;
+            /** Session Ids */
+            session_ids?: string[] | null;
+            /** User Ids */
+            user_ids?: string[] | null;
+        };
     };
     responses: never;
     parameters: never;
@@ -6242,7 +9022,7 @@ export interface operations {
         parameters: {
             query?: {
                 days?: number;
-                bot_id?: string | null;
+                agent_id?: string | null;
             };
             header?: never;
             path?: never;
@@ -6333,6 +9113,2863 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_agents_api_agents_get: {
+        parameters: {
+            query?: {
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedResponse_AgentRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_agent_api_agents_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgentCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    generate_agent_api_agents_generate_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgentGenerateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentGenerateResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    available_models_api_agents_models_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    rehearse_blueprint_api_agents_onboarding_rehearse_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RehearsalRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    scan_website_api_agents_onboarding_scan_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScanRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    generate_variants_api_agents_onboarding_variants_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["VariantRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_agent_api_agents__agent_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_agent_api_agents__agent_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_agent_api_agents__agent_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AgentUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    advice_api_agents__agent_id__advice_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    agent_analytics_api_agents__agent_id__analytics_get: {
+        parameters: {
+            query?: {
+                date_from?: string | null;
+                date_to?: string | null;
+                days?: number;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    knowledge_gaps_api_agents__agent_id__analytics_gaps_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    agent_insights_api_agents__agent_id__analytics_insights_get: {
+        parameters: {
+            query?: {
+                days?: number;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_archive_api_agents__agent_id__archive_get: {
+        parameters: {
+            query?: {
+                days?: number;
+                redact?: boolean;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_contacts_api_agents__agent_id__contacts_get: {
+        parameters: {
+            query?: {
+                page?: number;
+                page_size?: number;
+                q?: string | null;
+                leads_only?: boolean;
+                sort?: string | null;
+                cursor?: string | null;
+                count?: boolean;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedResponse_ContactRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_contacts_api_agents__agent_id__contacts_export_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    export_subject_data_api_agents__agent_id__contacts__contact_id__data_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: string;
+                contact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    erase_subject_data_api_agents__agent_id__contacts__contact_id__data_delete: {
+        parameters: {
+            query?: {
+                mode?: string;
+            };
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+                contact_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_conversations_api_agents__agent_id__conversations_get: {
+        parameters: {
+            query?: {
+                page?: number;
+                page_size?: number;
+                status?: string | null;
+                has_lead?: boolean | null;
+                q?: string | null;
+                search_transcript?: boolean;
+                sort?: string | null;
+                cursor?: string | null;
+                count?: boolean;
+                fields?: string | null;
+                outcome?: string | null;
+                sentiment?: string | null;
+                intent?: string | null;
+                min_rating?: number | null;
+                max_rating?: number | null;
+                min_lead_score?: number | null;
+                unrated?: boolean | null;
+                date_from?: string | null;
+                date_to?: string | null;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedResponse_ConversationRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    bulk_update_conversations_api_agents__agent_id__conversations_bulk_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BulkConversationUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BulkResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_conversation_api_agents__agent_id__conversations__conversation_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: string;
+                conversation_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ConversationDetail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    agent_dashboard_api_agents__agent_id__dashboard_get: {
+        parameters: {
+            query?: {
+                days?: number;
+                mode?: string | null;
+                compare?: boolean;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_discovered_api_agents__agent_id__discovered_fields_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscoveredFieldResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    forget_api_agents__agent_id__discovered_fields__field_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+                field_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    accept_api_agents__agent_id__discovered_fields__field_id__accept_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+                field_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcceptRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscoveredFieldResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dismiss_api_agents__agent_id__discovered_fields__field_id__dismiss_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+                field_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DiscoveredFieldResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    duplicate_agent_api_agents__agent_id__duplicate_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_embed_api_agents__agent_id__embed_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_funnel_api_agents__agent_id__funnel_get: {
+        parameters: {
+            query?: {
+                days?: number;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    intents_api_agents__agent_id__intents_get: {
+        parameters: {
+            query?: {
+                days?: number;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_documents_api_agents__agent_id__knowledge_get: {
+        parameters: {
+            query?: {
+                page?: number;
+                page_size?: number;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedResponse_DocumentRead_"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_document_api_agents__agent_id__knowledge_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DocumentCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    search_knowledge_api_agents__agent_id__knowledge_search_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SearchRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_document_api_agents__agent_id__knowledge_upload_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_document_api_agents__agent_id__knowledge_upload_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_document_api_agents__agent_id__knowledge__document_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    download_document_api_agents__agent_id__knowledge__document_id__download_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: string;
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentDownload"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reindex_document_api_agents__agent_id__knowledge__document_id__reindex_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    document_status_api_agents__agent_id__knowledge__document_id__status_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: string;
+                document_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DocumentStatusRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    agent_report_api_agents__agent_id__report_get: {
+        parameters: {
+            query?: {
+                format?: string;
+                days?: number;
+                mode?: string;
+                include_usage?: boolean;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rotate_key_api_agents__agent_id__rotate_key_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    satisfaction_api_agents__agent_id__satisfaction_get: {
+        parameters: {
+            query?: {
+                days?: number;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    suggest_improvements_api_agents__agent_id__suggest_improvements_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    test_message_api_agents__agent_id__test_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TestMessageRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TestMessageResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    upload_avatar_api_agents__agent_id__theme_avatar_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_upload_avatar_api_agents__agent_id__theme_avatar_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_avatar_api_agents__agent_id__theme_avatar_delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    generate_theme_api_agents__agent_id__theme_generate_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ThemeGenerateRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    traffic_api_agents__agent_id__traffic_get: {
+        parameters: {
+            query?: {
+                days?: number;
+            };
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_versions_api_agents__agent_id__versions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                agent_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentVersionRead"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    restore_version_api_agents__agent_id__versions__version__restore_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                agent_id: string;
+                version: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AgentRead"];
                 };
             };
             /** @description Validation Error */
@@ -6469,6 +12106,190 @@ export interface operations {
                 "application/json": components["schemas"]["PolicyRequest"];
             };
         };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_sms_provider_api_alerts_sms_provider_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    save_sms_provider_api_alerts_sms_provider_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SmsProviderRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    disconnect_sms_provider_api_alerts_sms_provider_delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+        };
+    };
+    quote_sms_api_alerts_sms_quote_get: {
+        parameters: {
+            query: {
+                number: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             /** @description Successful Response */
             200: {
@@ -8529,6 +14350,156 @@ export interface operations {
             };
         };
     };
+    my_sessions_api_auth_sessions_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    end_my_session_api_auth_sessions__session_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    switch_organization_api_auth_switch_organization_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SwitchOrganizationRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TokenResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     verification_status_api_auth_verification_status_get: {
         parameters: {
             query?: never;
@@ -8619,11 +14590,136 @@ export interface operations {
             };
         };
     };
-    list_bots_api_bots_get: {
+    checkout_api_billing_checkout_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CheckoutRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_entitlements_api_billing_entitlements_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    overview_api_billing_overview_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    payment_history_api_billing_payments_get: {
         parameters: {
             query?: {
-                page?: number;
-                page_size?: number;
+                limit?: number;
+                year?: number | null;
+                kind?: string | null;
             };
             header?: never;
             path?: never;
@@ -8647,218 +14743,6 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PaginatedResponse_BotRead_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_bot_api_bots_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BotCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BotRead"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    generate_bot_api_bots_generate_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BotGenerateRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BotGenerateResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    available_models_api_bots_models_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-        };
-    };
-    rehearse_blueprint_api_bots_onboarding_rehearse_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RehearsalRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
                     "application/json": {
                         [key: string]: unknown;
                     };
@@ -8885,364 +14769,64 @@ export interface operations {
             };
         };
     };
-    scan_website_api_bots_onboarding_scan_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ScanRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    generate_variants_api_bots_onboarding_variants_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["VariantRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_bot_api_bots__bot_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BotRead"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_bot_api_bots__bot_id__delete: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Message"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    update_bot_api_bots__bot_id__patch: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BotUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BotRead"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    advice_api_bots__bot_id__advice_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    bot_analytics_api_bots__bot_id__analytics_get: {
+    export_payments_api_billing_payments_export_get: {
         parameters: {
             query?: {
-                date_from?: string | null;
-                date_to?: string | null;
-                days?: number;
+                format?: string;
+                year?: number | null;
             };
             header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    receipt_api_billing_payments__payment_id__receipt_get: {
+        parameters: {
+            query?: never;
+            header?: never;
             path: {
-                bot_id: string;
+                payment_id: string;
             };
             cookie?: never;
         };
@@ -9288,15 +14872,166 @@ export interface operations {
             };
         };
     };
-    knowledge_gaps_api_bots__bot_id__analytics_gaps_get: {
+    receipt_html_api_billing_payments__payment_id__receipt_html_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                payment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/html": string;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    receipt_pdf_api_billing_payments__payment_id__receipt_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                payment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    tax_invoice_api_billing_payments__payment_id__tax_invoice_pdf_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                payment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    periods_api_billing_periods_get: {
         parameters: {
             query?: {
                 limit?: number;
             };
             header?: never;
-            path: {
-                bot_id: string;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -9343,1274 +15078,312 @@ export interface operations {
             };
         };
     };
-    bot_insights_api_bots__bot_id__analytics_insights_get: {
-        parameters: {
-            query?: {
-                days?: number;
-            };
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    export_archive_api_bots__bot_id__archive_get: {
-        parameters: {
-            query?: {
-                days?: number;
-                redact?: boolean;
-            };
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_contacts_api_bots__bot_id__contacts_get: {
-        parameters: {
-            query?: {
-                page?: number;
-                page_size?: number;
-                q?: string | null;
-                leads_only?: boolean;
-                sort?: string | null;
-                cursor?: string | null;
-                count?: boolean;
-            };
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedResponse_ContactRead_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    export_contacts_api_bots__bot_id__contacts_export_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    export_subject_data_api_bots__bot_id__contacts__contact_id__data_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                bot_id: string;
-                contact_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    erase_subject_data_api_bots__bot_id__contacts__contact_id__data_delete: {
-        parameters: {
-            query?: {
-                mode?: string;
-            };
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-                contact_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_conversations_api_bots__bot_id__conversations_get: {
-        parameters: {
-            query?: {
-                page?: number;
-                page_size?: number;
-                status?: string | null;
-                has_lead?: boolean | null;
-                q?: string | null;
-                search_transcript?: boolean;
-                sort?: string | null;
-                cursor?: string | null;
-                count?: boolean;
-                fields?: string | null;
-                outcome?: string | null;
-                sentiment?: string | null;
-                intent?: string | null;
-                min_rating?: number | null;
-                max_rating?: number | null;
-                min_lead_score?: number | null;
-                unrated?: boolean | null;
-                date_from?: string | null;
-                date_to?: string | null;
-            };
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedResponse_ConversationRead_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    bulk_update_conversations_api_bots__bot_id__conversations_bulk_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BulkConversationUpdate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BulkResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_conversation_api_bots__bot_id__conversations__conversation_id__get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                bot_id: string;
-                conversation_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["ConversationDetail"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    bot_dashboard_api_bots__bot_id__dashboard_get: {
-        parameters: {
-            query?: {
-                days?: number;
-                mode?: string | null;
-                compare?: boolean;
-            };
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": unknown;
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    duplicate_bot_api_bots__bot_id__duplicate_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BotRead"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_embed_api_bots__bot_id__embed_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    get_funnel_api_bots__bot_id__funnel_get: {
-        parameters: {
-            query?: {
-                days?: number;
-            };
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    intents_api_bots__bot_id__intents_get: {
-        parameters: {
-            query?: {
-                days?: number;
-            };
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_documents_api_bots__bot_id__knowledge_get: {
-        parameters: {
-            query?: {
-                page?: number;
-                page_size?: number;
-            };
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["PaginatedResponse_DocumentRead_"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    create_document_api_bots__bot_id__knowledge_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["DocumentCreate"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DocumentRead"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    search_knowledge_api_bots__bot_id__knowledge_search_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["SearchRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SearchResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    upload_document_api_bots__bot_id__knowledge_upload_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": components["schemas"]["Body_upload_document_api_bots__bot_id__knowledge_upload_post"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            201: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DocumentRead"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_document_api_bots__bot_id__knowledge__document_id__delete: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-                document_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Message"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    download_document_api_bots__bot_id__knowledge__document_id__download_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                bot_id: string;
-                document_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DocumentDownload"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    reindex_document_api_bots__bot_id__knowledge__document_id__reindex_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-                document_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["Message"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    document_status_api_bots__bot_id__knowledge__document_id__status_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                bot_id: string;
-                document_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["DocumentStatusRead"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    bot_report_api_bots__bot_id__report_get: {
+    export_periods_api_billing_periods_export_get: {
         parameters: {
             query?: {
                 format?: string;
-                days?: number;
-                mode?: string;
-                include_usage?: boolean;
+                limit?: number;
             };
             header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    plans_api_billing_plans_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    portal_api_billing_portal_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    get_profile_api_billing_profile_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    put_profile_api_billing_profile_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillingProfileIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    subscription_api_billing_subscription_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    list_exports_api_blueprints_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    redeem_asset_api_blueprints_assets__claim__get: {
+        parameters: {
+            query?: never;
+            header?: never;
             path: {
-                bot_id: string;
+                claim: string;
             };
             cookie?: never;
         };
@@ -10656,7 +15429,7 @@ export interface operations {
             };
         };
     };
-    rotate_key_api_bots__bot_id__rotate_key_post: {
+    export_agent_api_blueprints_export__agent_id__post: {
         parameters: {
             query?: never;
             header?: {
@@ -10668,14 +15441,18 @@ export interface operations {
                 "Idempotency-Key"?: string;
             };
             path: {
-                bot_id: string;
+                agent_id: string;
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExportRequest"];
+            };
+        };
         responses: {
             /** @description Successful Response */
-            200: {
+            202: {
                 headers: {
                     /** @description Requests permitted in the current window. */
                     "RateLimit-Limit"?: number;
@@ -10690,7 +15467,9 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BotRead"];
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
                 };
             };
             /** @description Validation Error */
@@ -10714,14 +15493,77 @@ export interface operations {
             };
         };
     };
-    satisfaction_api_bots__bot_id__satisfaction_get: {
+    import_blueprint_api_blueprints_import_post: {
         parameters: {
             query?: {
-                days?: number;
+                secrets?: string;
+                name?: string | null;
             };
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_import_blueprint_api_blueprints_import_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_status_api_blueprints_imports__import_id__get: {
+        parameters: {
+            query?: never;
             header?: never;
             path: {
-                bot_id: string;
+                import_id: string;
             };
             cookie?: never;
         };
@@ -10769,7 +15611,7 @@ export interface operations {
             };
         };
     };
-    suggest_improvements_api_bots__bot_id__suggest_improvements_post: {
+    transfer_api_blueprints_transfer_post: {
         parameters: {
             query?: never;
             header?: {
@@ -10780,8 +15622,125 @@ export interface operations {
                  */
                 "Idempotency-Key"?: string;
             };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TransferRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            202: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    validate_blueprint_api_blueprints_validate_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_validate_blueprint_api_blueprints_validate_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    download_api_blueprints__blueprint_id__download_get: {
+        parameters: {
+            query?: never;
+            header?: never;
             path: {
-                bot_id: string;
+                blueprint_id: string;
             };
             cookie?: never;
         };
@@ -10803,9 +15762,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
@@ -10829,7 +15786,7 @@ export interface operations {
             };
         };
     };
-    test_message_api_bots__bot_id__test_post: {
+    revoke_api_blueprints__blueprint_id__revoke_post: {
         parameters: {
             query?: never;
             header?: {
@@ -10841,133 +15798,7 @@ export interface operations {
                 "Idempotency-Key"?: string;
             };
             path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TestMessageRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["TestMessageResponse"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    upload_avatar_api_bots__bot_id__theme_avatar_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "multipart/form-data": components["schemas"]["Body_upload_avatar_api_bots__bot_id__theme_avatar_post"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    delete_avatar_api_bots__bot_id__theme_avatar_delete: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
+                blueprint_id: string;
             };
             cookie?: never;
         };
@@ -10990,235 +15821,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Message"];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    generate_theme_api_bots__bot_id__theme_generate_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ThemeGenerateRequest"];
-            };
-        };
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    traffic_api_bots__bot_id__traffic_get: {
-        parameters: {
-            query?: {
-                days?: number;
-            };
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    list_versions_api_bots__bot_id__versions_get: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                bot_id: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BotVersionRead"][];
-                };
-            };
-            /** @description Validation Error */
-            422: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["HTTPValidationError"];
-                };
-            };
-        };
-    };
-    restore_version_api_bots__bot_id__versions__version__restore_post: {
-        parameters: {
-            query?: never;
-            header?: {
-                /**
-                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
-                 *
-                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
-                 */
-                "Idempotency-Key"?: string;
-            };
-            path: {
-                bot_id: string;
-                version: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Successful Response */
-            200: {
-                headers: {
-                    /** @description Requests permitted in the current window. */
-                    "RateLimit-Limit"?: number;
-                    /** @description Requests left in the current window. Back off before it reaches 0. */
-                    "RateLimit-Remaining"?: number;
-                    /** @description Seconds until the current window resets. */
-                    "RateLimit-Reset"?: number;
-                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
-                    "X-API-Version"?: string;
-                    /** @description Quote this in a support request to identify the call. */
-                    "X-Request-ID"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BotRead"];
                 };
             };
             /** @description Validation Error */
@@ -11678,7 +16280,9 @@ export interface operations {
     };
     credits_api_credits_get: {
         parameters: {
-            query?: never;
+            query?: {
+                days?: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -11701,9 +16305,26 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": {
-                        [key: string]: unknown;
-                    };
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
@@ -11765,7 +16386,8 @@ export interface operations {
             query?: {
                 days?: number;
                 kind?: string | null;
-                bot_id?: string | null;
+                direction?: string | null;
+                agent_id?: string | null;
                 limit?: number;
                 cursor?: string | null;
             };
@@ -11848,6 +16470,478 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_tables_api_data_tables_get: {
+        parameters: {
+            query?: {
+                agent_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DataTableResponse"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_table_api_data_tables_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DataTableCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DataTableResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_upload_api_data_tables_preview_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_preview_upload_api_data_tables_preview_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PreviewResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_table_api_data_tables__table_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                table_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_table_api_data_tables__table_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                table_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DataTableUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DataTableResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    import_csv_api_data_tables__table_id__import_post: {
+        parameters: {
+            query?: {
+                replace?: boolean;
+            };
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                table_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_import_csv_api_data_tables__table_id__import_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ImportResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    test_lookup_api_data_tables__table_id__lookup_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                table_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LookupRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LookupResponse"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_row_previews_api_data_tables__table_id__rows_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                table_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    }[];
                 };
             };
             /** @description Validation Error */
@@ -12081,6 +17175,216 @@ export interface operations {
             };
         };
     };
+    list_drafts_api_drafts_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    save_draft_api_drafts_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DraftSave"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    load_draft_api_drafts__resource_type__get: {
+        parameters: {
+            query?: {
+                resource_id?: string | null;
+                live_revision?: string | null;
+            };
+            header?: never;
+            path: {
+                resource_type: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    discard_draft_api_drafts__resource_type__delete: {
+        parameters: {
+            query?: {
+                resource_id?: string | null;
+            };
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                resource_type: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_exports_api_exports_get: {
         parameters: {
             query?: {
@@ -12169,7 +17473,7 @@ export interface operations {
     list_flows_api_flows_get: {
         parameters: {
             query?: {
-                bot_id?: string | null;
+                agent_id?: string | null;
             };
             header?: never;
             path?: never;
@@ -12587,7 +17891,7 @@ export interface operations {
             query?: {
                 mine?: boolean;
                 unassigned?: boolean;
-                bot_id?: string | null;
+                agent_id?: string | null;
                 limit?: number;
                 cursor?: string | null;
             };
@@ -12936,6 +18240,1287 @@ export interface operations {
             };
         };
     };
+    list_leads_api_leads_get: {
+        parameters: {
+            query?: {
+                stage?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    rule_fields_api_leads_fields_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    organise_now_api_leads_organise_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    list_rules_api_leads_rules_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    create_rule_api_leads_rules_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RuleBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_rule_api_leads_rules__rule_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                rule_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_rule_api_leads_rules__rule_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                rule_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RulePatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_segments_api_leads_segments_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    create_segment_api_leads_segments_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SegmentBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_segment_api_leads_segments_preview_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PreviewBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_segment_api_leads_segments__segment_id__get: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                segment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_segment_api_leads_segments__segment_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                segment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_segment_api_leads_segments__segment_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                segment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SegmentPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    refresh_segment_api_leads_segments__segment_id__refresh_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                segment_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_request_logs_api_logs_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+                cursor?: string | null;
+                api_key_id?: string | null;
+                /** @description One of `2xx`, `3xx`, `4xx`, `5xx`, or `errors` for everything >= 400. */
+                status_class?: string | null;
+                method?: string | null;
+                /** @description Substring of the templated path, e.g. `agents` or `knowledge`. */
+                path_contains?: string | null;
+                /** @description The `X-Request-ID` from a response. This is the lookup to use when a customer quotes an error - it resolves to the exact call. */
+                request_id?: string | null;
+                since_hours?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_log_summary_api_logs_summary_get: {
+        parameters: {
+            query?: {
+                hours?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_inbox_api_notifications_inbox_get: {
+        parameters: {
+            query?: {
+                view?: "unread" | "all" | "archived";
+                category?: string | null;
+                org_id?: string | null;
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    archive_api_notifications_inbox_archive_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IdsRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_preferences_api_notifications_inbox_preferences_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    write_preferences_api_notifications_inbox_preferences_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PreferencesRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mark_read_api_notifications_inbox_read_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IdsRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    inbox_summary_api_notifications_inbox_summary_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    unarchive_api_notifications_inbox_unarchive_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IdsRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    mark_unread_api_notifications_inbox_unread_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IdsRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     read_preferences_api_notifications_preferences_get: {
         parameters: {
             query?: {
@@ -13024,6 +19609,1518 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PreferencesOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_campaigns_api_outreach_campaigns_get: {
+        parameters: {
+            query?: {
+                status?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_campaign_api_outreach_campaigns_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CampaignBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_campaign_api_outreach_campaigns__campaign_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_campaign_api_outreach_campaigns__campaign_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_campaign_api_outreach_campaigns__campaign_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CampaignPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    cancel_campaign_api_outreach_campaigns__campaign_id__cancel_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    generate_campaign_api_outreach_campaigns__campaign_id__generate_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GenerateBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    campaign_messages_api_outreach_campaigns__campaign_id__messages_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    pause_campaign_api_outreach_campaigns__campaign_id__pause_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_campaign_api_outreach_campaigns__campaign_id__preview_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    campaign_readiness_api_outreach_campaigns__campaign_id__readiness_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    resume_campaign_api_outreach_campaigns__campaign_id__resume_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    schedule_campaign_api_outreach_campaigns__campaign_id__schedule_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_steps_api_outreach_campaigns__campaign_id__steps_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                campaign_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StepsBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    dns_records_api_outreach_dns_records_get: {
+        parameters: {
+            query: {
+                from_email: string;
+                provider?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_identities_api_outreach_identities_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    create_identity_api_outreach_identities_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IdentityBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_identity_api_outreach_identities__identity_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                identity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_identity_api_outreach_identities__identity_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                identity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    update_identity_api_outreach_identities__identity_id__patch: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                identity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IdentityPatch"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    check_identity_api_outreach_identities__identity_id__check_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                identity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    test_identity_api_outreach_identities__identity_id__test_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                identity_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TestSendBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    options_api_outreach_options_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    run_now_api_outreach_run_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    list_suppressions_api_outreach_suppressions_get: {
+        parameters: {
+            query?: {
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_suppression_api_outreach_suppressions_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SuppressBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_suppression_api_outreach_suppressions__email_bidx__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                email_bidx: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Message"];
                 };
             };
             /** @description Validation Error */
@@ -13223,6 +21320,90 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    open_stream_api_stream_get: {
+        parameters: {
+            query?: {
+                topics?: string;
+                last_event_id?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_topics_api_stream_topics_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
                 };
             };
         };
@@ -13648,7 +21829,7 @@ export interface operations {
     list_tools_api_tools_get: {
         parameters: {
             query?: {
-                bot_id?: string | null;
+                agent_id?: string | null;
             };
             header?: never;
             path?: never;
@@ -14127,11 +22308,318 @@ export interface operations {
             };
         };
     };
+    export_api_usage_export_get: {
+        parameters: {
+            query?: {
+                format?: string;
+                /** @description Window length in days (default 30) */
+                days?: number | null;
+                /** @description Window length in hours; overrides days */
+                hours?: number | null;
+                /** @description Window start (ISO 8601); overrides days and hours */
+                from?: string | null;
+                /** @description Window end (ISO 8601) */
+                to?: string | null;
+                /** @description Only this agent */
+                agent_id?: string | null;
+                /** @description Only this model id */
+                model?: string | null;
+                channel?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    filters_api_usage_filters_get: {
+        parameters: {
+            query?: {
+                /** @description Window length in days (default 30) */
+                days?: number | null;
+                /** @description Window length in hours; overrides days */
+                hours?: number | null;
+                /** @description Window start (ISO 8601); overrides days and hours */
+                from?: string | null;
+                /** @description Window end (ISO 8601) */
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    generations_api_usage_generations_get: {
+        parameters: {
+            query?: {
+                /** @description Window length in days (default 30) */
+                days?: number | null;
+                /** @description Window length in hours; overrides days */
+                hours?: number | null;
+                /** @description Window start (ISO 8601); overrides days and hours */
+                from?: string | null;
+                /** @description Window end (ISO 8601) */
+                to?: string | null;
+                /** @description Only this agent */
+                agent_id?: string | null;
+                /** @description Only this model id */
+                model?: string | null;
+                channel?: string | null;
+                finish_reason?: string | null;
+                errors_only?: boolean;
+                limit?: number;
+                cursor?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    generation_api_usage_generations__message_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                message_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    overview_api_usage_overview_get: {
+        parameters: {
+            query?: {
+                /** @description Window length in days (default 30) */
+                days?: number | null;
+                /** @description Window length in hours; overrides days */
+                hours?: number | null;
+                /** @description Window start (ISO 8601); overrides days and hours */
+                from?: string | null;
+                /** @description Window end (ISO 8601) */
+                to?: string | null;
+                /** @description Only this agent */
+                agent_id?: string | null;
+                /** @description Only this model id */
+                model?: string | null;
+                channel?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_saved_views_api_views_get: {
         parameters: {
             query?: {
                 resource?: string | null;
-                bot_id?: string | null;
+                agent_id?: string | null;
             };
             header?: never;
             path?: never;
@@ -14366,7 +22854,7 @@ export interface operations {
     list_webhooks_api_webhooks_get: {
         parameters: {
             query?: {
-                bot_id?: string | null;
+                agent_id?: string | null;
             };
             header?: never;
             path?: never;
@@ -15053,6 +23541,38 @@ export interface operations {
             };
         };
     };
+    capability_catalogue_api_workspace_capabilities_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
     read_encryption_api_workspace_encryption_get: {
         parameters: {
             query?: never;
@@ -15471,6 +23991,216 @@ export interface operations {
             };
         };
     };
+    read_pool_api_workspace_pool_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    list_workspace_sessions_api_workspace_sessions_get: {
+        parameters: {
+            query?: {
+                org_id?: string | null;
+                user_id?: string | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    end_workspace_sessions_api_workspace_sessions_revoke_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WorkspaceSessionRevoke"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    end_workspace_session_api_workspace_sessions__session_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                session_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     list_sub_accounts_api_workspace_sub_accounts_get: {
         parameters: {
             query?: never;
@@ -15658,6 +24388,187 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SubAccountRead"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_allocation_api_workspace_sub_accounts__sub_account_id__allocation_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                sub_account_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AllocationUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    read_capabilities_api_workspace_sub_accounts__sub_account_id__capabilities_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sub_account_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    set_capabilities_api_workspace_sub_accounts__sub_account_id__capabilities_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                /**
+                 * @description A unique key of your choosing, so this request can be retried safely. The first request with a given key executes; every replay returns that first response unchanged, with `Idempotent-Replay: true` set.
+                 *
+                 *     Generate one key per *action*, not per session - reusing a key with a different body is refused with 422 rather than silently replaying the wrong answer. Keys are remembered for 24 hours. A request that failed releases its key, so a retry after fixing the payload runs normally.
+                 */
+                "Idempotency-Key"?: string;
+            };
+            path: {
+                sub_account_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DelegationUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    /** @description Requests permitted in the current window. */
+                    "RateLimit-Limit"?: number;
+                    /** @description Requests left in the current window. Back off before it reaches 0. */
+                    "RateLimit-Remaining"?: number;
+                    /** @description Seconds until the current window resets. */
+                    "RateLimit-Reset"?: number;
+                    /** @description The dated version of the API contract that served this response, e.g. `2026-09-03`. Pin against it; it changes only when a response shape changes incompatibly. */
+                    "X-API-Version"?: string;
+                    /** @description Quote this in a support request to identify the call. */
+                    "X-Request-ID"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
                 };
             };
             /** @description Validation Error */
