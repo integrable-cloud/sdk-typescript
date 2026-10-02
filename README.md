@@ -21,7 +21,7 @@ for (const agent of items) {
 }
 ```
 
-Create a key in the dashboard under **Settings → API keys**. It starts with `sk_live_` and is shown once.
+Create a key in the agent studio under **Developer → API keys** ([app.integrable.cloud/developer/keys](https://app.integrable.cloud/developer/keys)). It starts with `sk_live_` and is shown once.
 
 ## What it does that `fetch` does not
 
@@ -38,7 +38,7 @@ A mutating request without a key is never retried — "did that land?" is exactl
 **Pagination that stays fast.** List endpoints return a cursor, and `walk()` follows it lazily:
 
 ```ts
-for await (const conversation of client.conversations.walk(agentId, { days: 30 })) {
+for await (const conversation of client.conversations.walk(agentId, { date_from: "2026-09-01" })) {
   await syncToCrm(conversation);
 }
 ```
@@ -71,7 +71,7 @@ Every error carries `.requestId` — quote it at support and the exact call can 
 
 ```ts
 await client.agents.list();
-console.log(client.rateLimit); // { limit: 120, remaining: 118, reset: 41 }
+console.log(client.rateLimit); // { limit: 240, remaining: 238, reset: 41 }
 ```
 
 ## Configuration
@@ -98,7 +98,7 @@ type Contact = components["schemas"]["ContactRead"];
 
 const { data } = await client.http.get<{ items: Contact[] }>(
   `/api/agents/${agentId}/contacts`,
-  { query: { limit: 50 } },
+  { query: { page_size: 50 } },
 );
 ```
 

@@ -36,7 +36,7 @@ import {
 } from "./errors.js";
 
 export interface ClientOptions {
-  /** Your `sk_live_` key. Create one at Settings → API keys. */
+  /** Your `sk_live_` key. Create one at app.integrable.cloud/developer/keys. */
   apiKey: string;
   /** Override for self-hosted or staging. Defaults to production. */
   baseUrl?: string;
@@ -142,7 +142,7 @@ export class HttpClient {
   constructor(options: ClientOptions) {
     if (!options.apiKey) {
       throw new Error(
-        "An API key is required. Create one at Settings → API keys, then pass it " +
+        "An API key is required. Create one at app.integrable.cloud/developer/keys, then pass it " +
           "as `new Integrable({ apiKey })`.",
       );
     }

@@ -26,7 +26,7 @@ export type Webhook = Schemas["WebhookResponse"];
 export type WebhookCreated = Schemas["WebhookCreated"];
 
 export interface ListParams {
-  limit?: number;
+  page_size?: number;
   cursor?: string;
   [key: string]: string | number | boolean | undefined;
 }
@@ -43,9 +43,9 @@ export class Agents {
 
   /** Every agent, fetched a page at a time as you consume it. */
   walk(params: ListParams = {}): Paginator<Agent> {
-    return new Paginator<Agent>(async (cursor) => {
+    return new Paginator<Agent>(async (next) => {
       const { data } = await this.http.get<Page<Agent>>("/api/agents", {
-        query: { ...params, cursor },
+        query: { ...params, ...next },
       });
       return data;
     });
@@ -99,10 +99,10 @@ export class Conversations {
    * correct and fast on a workspace with a hundred thousand of them.
    */
   walk(agentId: string, params: ListParams = {}): Paginator<Record<string, unknown>> {
-    return new Paginator(async (cursor) => {
+    return new Paginator(async (next) => {
       const { data } = await this.http.get<Page<Record<string, unknown>>>(
         `/api/agents/${agentId}/conversations`,
-        { query: { ...params, cursor } },
+        { query: { ...params, ...next } },
       );
       return data;
     });
@@ -129,10 +129,10 @@ export class Knowledge {
   }
 
   walk(agentId: string, params: ListParams = {}): Paginator<Document> {
-    return new Paginator<Document>(async (cursor) => {
+    return new Paginator<Document>(async (next) => {
       const { data } = await this.http.get<Page<Document>>(
         `/api/agents/${agentId}/knowledge`,
-        { query: { ...params, cursor } },
+        { query: { ...params, ...next } },
       );
       return data;
     });

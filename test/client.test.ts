@@ -279,6 +279,26 @@ describe("pagination", () => {
     expect(seen).toEqual(["1", "2", "3"]);
   });
 
+  it("walks a numbered endpoint past page one", async () => {
+    // Agents and knowledge say has_more with no cursor; stopping there
+    // returned only the first 20 documents.
+    const pages = [
+      { items: [{ id: "1" }], page: 1, has_more: true },
+      { items: [{ id: "2" }], page: 2, has_more: false },
+    ];
+    let call = 0;
+    const fetchImpl = stubFetch(async () => jsonResponse(200, pages[call++]!));
+
+    const seen: string[] = [];
+    for await (const doc of clientWith(fetchImpl).knowledge.walk("a1")) {
+      seen.push((doc as { id: string }).id);
+    }
+    expect(seen).toEqual(["1", "2"]);
+    const second = new URL(String(fetchImpl.mock.calls[1]?.[0]));
+    expect(second.searchParams.get("page")).toBe("2");
+    expect(second.searchParams.has("cursor")).toBe(false);
+  });
+
   it("stops rather than looping forever when a cursor repeats", async () => {
     // A server bug that would otherwise be an infinite loop hammering the API.
     const fetchImpl = stubFetch(async () =>

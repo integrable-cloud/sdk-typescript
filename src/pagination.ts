@@ -1,13 +1,17 @@
 /**
  * Walking a list endpoint without writing the loop.
  *
- * Every list endpoint returns `{ items, next_cursor, has_more }`. Following
- * the cursor by hand is four lines that everybody writes slightly differently,
- * and the common variant is wrong in the same way: it increments a page number
+ * List endpoints return `{ items, next_cursor, has_more }`. Following the
+ * cursor by hand is four lines that everybody writes slightly differently, and
+ * the common variant is wrong in the same way: it increments a page number
  * instead. Offset pagination makes Postgres read and discard every skipped
  * row, so page 40 costs forty times page 1 and eventually times out on a busy
  * tenant. Exposing an async iterator makes the correct thing also the shortest
  * thing to write.
+ *
+ * A few endpoints (agents, knowledge) are still numbered: they report
+ * `has_more` with no cursor. Stopping there would quietly return only the
+ * first page, so for those the paginator advances `page` instead.
  *
  *     for await (const conversation of client.conversations.walk(agentId)) {
  *       ...
@@ -22,27 +26,41 @@ export interface Page<T> {
   next_cursor?: string | null;
   has_more?: boolean;
   total?: number;
+  page?: number;
+}
+
+/** What to ask for next: the cursor, or the page number where there is none. */
+export interface PageRequest {
+  cursor?: string;
+  page?: number;
 }
 
 /** A lazily-fetched sequence over every page of a list endpoint. */
 export class Paginator<T> implements AsyncIterable<T> {
-  constructor(private readonly fetchPage: (cursor?: string) => Promise<Page<T>>) {}
+  constructor(private readonly fetchPage: (next: PageRequest) => Promise<Page<T>>) {}
 
   async *[Symbol.asyncIterator](): AsyncIterator<T> {
-    let cursor: string | undefined;
+    let request: PageRequest = {};
     // Guards against a server that returns `has_more: true` with the same
     // cursor forever. Without it that is an infinite loop hammering the API,
     // which is a worse failure than stopping early.
     const seen = new Set<string>();
 
     for (;;) {
-      const page = await this.fetchPage(cursor);
+      const page = await this.fetchPage(request);
       for (const item of page.items ?? []) yield item;
 
+      if (!page.has_more || !page.items?.length) return;
       const next = page.next_cursor;
-      if (!page.has_more || !next || seen.has(next)) return;
-      seen.add(next);
-      cursor = next;
+      if (next) {
+        if (seen.has(next)) return;
+        seen.add(next);
+        request = { cursor: next };
+      } else if (typeof page.page === "number") {
+        request = { page: page.page + 1 };
+      } else {
+        return;
+      }
     }
   }
 

@@ -58,7 +58,7 @@ export type {
 } from "./client.js";
 
 export { Paginator } from "./pagination.js";
-export type { Page } from "./pagination.js";
+export type { Page, PageRequest } from "./pagination.js";
 
 export {
   Analytics,
